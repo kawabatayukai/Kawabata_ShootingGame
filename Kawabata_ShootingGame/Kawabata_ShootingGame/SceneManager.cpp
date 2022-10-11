@@ -1,21 +1,10 @@
 #include "SceneManager.h"
 
-//Update()・・メンバ変数の値を変更
-AbstractScene* SceneManager::Update()
+//更新
+void SceneManager::Update()
 {
     //現在シーンのアップデートを実行
-    AbstractScene* p = mScene->Update();
-
-    //UpDateでもらったシーンが現在のシーンと異なる場合
-    //現在のシーンを削除し、新たなシーンに切り替える
-    if (p != mScene)
-    {
-        delete mScene;
-        mScene = p;
-    }
-
-    //新たなシーンを返す
-    return p;
+    mScene->Update();
 }
 
 
@@ -24,4 +13,21 @@ void SceneManager::Draw() const
 {
     //const はメンバ変数の変更を拒否
     mScene->Draw();
+}
+
+//シーンの変更処理
+AbstractScene* SceneManager::ChangeScene()
+{
+    //現在のシーンのシーン変更を実行
+    AbstractScene* NextScene = mScene->ChangeScene();
+
+    //次のシーンが現在のシーンと異なる場合、次のシーンに切り替える
+    if (NextScene != mScene)
+    {
+        delete mScene;        //現在のシーンを削除
+        mScene = NextScene;   //次のシーンに切り替える
+    }
+
+    //新たなシーンを返す
+    return NextScene;
 }

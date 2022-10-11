@@ -1,4 +1,6 @@
 #include"DxLib.h"
+#include"SceneManager.h"
+#include"Scene_Title.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -8,12 +10,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     if (DxLib_Init() == -1) return -1;     //DXライブラリの初期化処理
     SetDrawScreen(DX_SCREEN_BACK);         //描画先画面を裏にする
 
+
+    //シーンマネージャー     　　　　　　　　　　　　　　　ﾀｲﾄﾙを設定
+    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new TitleScene()));
+
     while (ProcessMessage() == 0)
     {
         // 画面の初期化 
         ClearDrawScreen();
 
-        DrawString(0, 0, "Test", 0xffffff);
+        sceneMng.Update();     //更新
+        sceneMng.Draw();       //描画
+
+        //シーンの変更   ENDの場合　nullptr
+        if (sceneMng.ChangeScene() == nullptr)
+        {
+            DxLib_End();  //DxLib終了処理
+            return 0;     
+        }
 
         //裏画面の内容を表画面に反映
         ScreenFlip();
