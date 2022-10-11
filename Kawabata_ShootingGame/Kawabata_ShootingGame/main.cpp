@@ -2,7 +2,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    SetMainWindowText("Neko");             //タイトルを設定
+    SetMainWindowText("Shooting");             //タイトルを設定
     ChangeWindowMode(TRUE);                //ウィンドウモードで起動
     //SetGraphMode(1280, 720, 32);           //ウィンドウサイズを設定
     if (DxLib_Init() == -1) return -1;     //DXライブラリの初期化処理
