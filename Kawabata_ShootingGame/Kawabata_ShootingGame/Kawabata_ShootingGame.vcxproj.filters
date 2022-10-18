@@ -16,6 +16,9 @@
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{51a94e60-7417-4102-95f5-d490f7267030}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Chara">
+      <UniqueIdentifier>{a0cce31e-f23b-484d-8e02-64084f0fae85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,6 +33,15 @@
     <ClCompile Include="Scene_GameMain.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaBase.cpp">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -43,6 +55,18 @@
     </ClInclude>
     <ClInclude Include="Scene_Title.h">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClInclude>
+    <ClInclude Include="CharaBase.h">
+      <Filter>ソース ファイル\Chara</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

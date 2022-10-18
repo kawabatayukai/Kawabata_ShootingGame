@@ -1,0 +1,8 @@
+#pragma once
+
+//ç¿ïW
+struct T_LOCATION
+{
+	float x;
+	float y;
+};

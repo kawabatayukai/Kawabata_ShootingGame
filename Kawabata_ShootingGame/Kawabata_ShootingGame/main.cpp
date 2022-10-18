@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"SceneManager.h"
 #include"Scene_Title.h"
+#include"Scene_GameMain.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -12,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
     //シーンマネージャー     　　　　　　　　　　　　　　　ﾀｲﾄﾙを設定
-    SceneManager sceneMng( dynamic_cast<AbstractScene*>(new TitleScene()) );
+    SceneManager sceneMng( dynamic_cast<AbstractScene*>(new GameMainScene()) );
 
     while (ProcessMessage() == 0)
     {
