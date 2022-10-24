@@ -3,6 +3,7 @@
 #include"Scene_Title.h"
 #include"Scene_GameMain.h"
 
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     SetMainWindowText("Shooting");             //ƒ^ƒCƒgƒ‹‚ğİ’è

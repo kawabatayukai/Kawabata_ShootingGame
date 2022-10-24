@@ -1,12 +1,13 @@
 #include"DxLib.h"
 #include "Player.h"
 #include"StraightBullets.h"
+#include"KeyManager.h"
 
 //コンストラクタ          初期位置      　　　　　　   radius        speed               
 Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 2,2 }), score(0), life(10)
 {
 	//メモリを確保する Bullets** bullets 
-	
+
 	bullets = new BulletsBase * [30];    //最大数　30  
 
 	for (int i = 0; i < 30; i++)
@@ -37,7 +38,7 @@ void Player::UpDate()
 	}
 
 
-	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
+	if (KeyManager::OnMouseClicked(MOUSE_INPUT_LEFT))
 	{
 		//配列の空要素
 		if (bulletCount < 30 && bullets[bulletCount] == nullptr)
@@ -53,7 +54,7 @@ void Player::UpDate()
 //描画
 void Player::Draw()
 {
-	DrawCircle(GetLocation().x, GetLocation().y, GetRadius(), GetColor(255, 0, 0));
+	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 0, 0));
 
 
 	for (int bulletCount = 0; bulletCount < 30; bulletCount++)

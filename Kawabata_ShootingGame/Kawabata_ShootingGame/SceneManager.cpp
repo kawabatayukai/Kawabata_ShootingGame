@@ -1,10 +1,14 @@
 #include "SceneManager.h"
+#include"KeyManager.h"
 
 //更新
 void SceneManager::Update()
 {
     //現在シーンのアップデートを実行
     mScene->Update();
+
+    //キーボードのアップデートを実行
+    KeyManager::Update();
 }
 
 
