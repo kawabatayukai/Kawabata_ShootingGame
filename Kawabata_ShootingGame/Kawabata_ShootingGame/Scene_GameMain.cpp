@@ -19,6 +19,11 @@ GameMainScene::~GameMainScene()
 //XV
 void GameMainScene::Update()
 {
+	//T_LOCATION location = T_LOCATION{ 100,100 };
+	//Player test = Player(location);
+	////test.Draw();
+
+	/*if (test.HitSphere(player)) return;*/
 	player->UpDate();
 }
 

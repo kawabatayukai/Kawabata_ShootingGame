@@ -12,9 +12,6 @@ SphereCollider::SphereCollider(T_LOCATION location, float radius)
 //SphereCollider同士の当たり判定
 bool SphereCollider::HitSphere(const SphereCollider* collider) const
 {
-	//自分から相手へのベクトルを計算する
-	//計算で出したベクトルの大きさと自分と相手の半径の合計より
-	//ベクトルの大きさが小さければあたり
 	
 	//自分と相手間のベクトルを計算
 	float vectrX = fabsf(this->location.x - collider->GetLocation().x);    //x座標の差分
@@ -22,8 +19,12 @@ bool SphereCollider::HitSphere(const SphereCollider* collider) const
 	float vectrLength = sqrtf((vectrX * vectrX) + (vectrY * vectrY));      //2つの円の距離  ベクトルの大きさを計算
 
 	//自分と相手間のベクトルと半径の合計を比較
-	if (vectrLength < (this->radius + collider->GetRadius())) return true;
-	else return false;
+	//if (vectrLength < (this->radius + collider->GetRadius())) return true;
+	//else return false;
+
+	bool ret = (vectrLength < (this->radius + collider->GetRadius()));
+
+	return ret;
 }
 
 //中心座標取得

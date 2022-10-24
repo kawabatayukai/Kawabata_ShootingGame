@@ -1,5 +1,6 @@
 #pragma once
 #include"SphereCollider.h"
+#include"BulletsBase.h"
 
 //キャラの基底クラス
 class CharaBase : public SphereCollider
@@ -11,13 +12,15 @@ public:
 	virtual void Draw() = 0;      //描画
 	virtual void Hit() = 0;       //当たった時の処理
 
-	//GetBullets();
+	BulletsBase** GetBullets();   //
 
 protected:
 	int* image;
+	BulletsBase** bullets;        //ポインタ配列
 
 private:
-	//bullets ポインタ配列
+
+
 	T_LOCATION speed;
 };
 

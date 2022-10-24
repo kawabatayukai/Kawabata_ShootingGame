@@ -6,7 +6,7 @@ class SphereCollider
 {
 public:
 	SphereCollider(T_LOCATION location, float radius);
-	~SphereCollider();
+	//~SphereCollider();
 
 public:
 	//SphereCollider“¯Žm‚Ì“–‚½‚è”»’è
