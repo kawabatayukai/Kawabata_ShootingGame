@@ -10,17 +10,20 @@ public:
 
 	virtual void UpDate() = 0;    //更新
 	virtual void Draw() = 0;      //描画
-	virtual void Hit() = 0;       //当たった時の処理
+	virtual void Hit(int damage) = 0;       //当たった時の処理
 
-	BulletsBase** GetBullets();   //
+	BulletsBase** GetBullets();             //弾配列取得
+
+	void DeleteBullet(int bulletNum);       //指定された要素番号の弾を削除
 
 protected:
 	int* image;
 	BulletsBase** bullets;        //ポインタ配列
+	T_LOCATION speed;
 
 private:
 
 
-	T_LOCATION speed;
+	
 };
 

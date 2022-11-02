@@ -9,3 +9,18 @@ CharaBase::CharaBase(T_LOCATION location, float radius,T_LOCATION speed)
 
 //’eî•ñæ“¾
 BulletsBase** CharaBase::GetBullets() { return bullets; }
+
+//w’è‚³‚ê‚½—v‘f”Ô†‚Ì’e‚ğíœ
+void CharaBase::DeleteBullet(int bulletNum)
+{
+	delete bullets[bulletNum];   //íœ
+	bullets[bulletNum] = nullptr;//‰Šú‰»
+
+	//”z—ñ‚ğ‘O‚É‹l‚ß‚é
+	for (int i = bulletNum; i < (30 - 1); i++)
+	{
+		if (bullets[i + 1] == nullptr) break;
+		bullets[i] = bullets[i + 1];
+		bullets[i + 1] = nullptr;                //‹l‚ß‚½Œ³‚ğ‰Šú‰»
+	}
+}

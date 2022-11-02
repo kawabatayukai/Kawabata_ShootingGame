@@ -9,10 +9,10 @@ public:
 
 	void UpDate() override;  //更新
 	void Draw() override;    //描画
-	void Hit() override;     //当たった時の処理
+	void Hit(int damage) override;     //当たった時の処理
 	
-	bool LifeCheck();        //"life"を確認
-	int GetScore() const;    //スコア取得
+	bool LifeCheck();                  //"life"を確認
+	int GetScore() const;              //スコア取得
 
 private:
 	int score;

@@ -11,6 +11,8 @@ public:
 	virtual void UpDate() override;           //XV
 	virtual void Draw() override;             //•`‰æ
 
+	virtual bool IsScreenOut() override;      //‰æ–ÊŠO/“à
+
 private:
 
 };

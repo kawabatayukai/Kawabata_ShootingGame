@@ -2,7 +2,7 @@
 #include "StraightBullets.h"
 
 StraightBullets::StraightBullets(T_LOCATION location)
-	:BulletsBase(location, 5.0f, 3, T_LOCATION{ 0,9 })    //ã•ûŒü‚É‚Ü‚Á‚·‚®
+	:BulletsBase(location, 5.0f, 3, T_LOCATION{ 0,5 })    //ã•ûŒü‚É‚Ü‚Á‚·‚®
 {
 
 }
@@ -19,5 +19,14 @@ void StraightBullets::UpDate()
 //•`‰æ
 void StraightBullets::Draw()
 {
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 0, 0));
+	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(0, 200, 0));
+}
+
+//‰æ–ÊŠO/“à
+bool StraightBullets::IsScreenOut()
+{
+	//StraightBullets‚Íã•ûŒü‚É’¼i‚Ì‚İ
+	bool ret = ((GetLocation().y + GetRadius()) <= 0);
+
+	return ret;
 }

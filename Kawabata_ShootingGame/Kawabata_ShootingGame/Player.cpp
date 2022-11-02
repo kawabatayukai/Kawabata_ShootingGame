@@ -4,7 +4,7 @@
 #include"KeyManager.h"
 
 //コンストラクタ          初期位置      　　　　　　   radius        speed               
-Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 2,2 }), score(0), life(10)
+Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 5,5 }), score(0), life(10)
 {
 	//メモリを確保する Bullets** bullets 
 
@@ -22,7 +22,11 @@ void Player::UpDate()
 	//現在の位置
 	T_LOCATION newLoacation = GetLocation();
 
-	newLoacation.x += 1;
+	if (KeyManager::OnKeyPressed(KEY_INPUT_W)) newLoacation.y -= speed.y;
+	if (KeyManager::OnKeyPressed(KEY_INPUT_S)) newLoacation.y += speed.y;
+	if (KeyManager::OnKeyPressed(KEY_INPUT_A)) newLoacation.x -= speed.x;
+	if (KeyManager::OnKeyPressed(KEY_INPUT_D)) newLoacation.x += speed.x;
+	
 	SetLocation(newLoacation);
 
 
@@ -30,25 +34,26 @@ void Player::UpDate()
 	for (bulletCount = 0; bulletCount < 30; bulletCount++)
 	{
 		//配列の空要素
-		if (bullets[bulletCount] == nullptr)
-		{
-			break;
-		}
+		if (bullets[bulletCount] == nullptr) break;
 		bullets[bulletCount]->UpDate();
+
+		//画面外で削除する
+		if (bullets[bulletCount]->IsScreenOut() == true)
+		{
+			DeleteBullet(bulletCount);   //弾を削除する
+			bulletCount--;
+		}
 	}
 
 
-	if (KeyManager::OnMouseClicked(MOUSE_INPUT_LEFT))
+	if (KeyManager::OnMousePressed(MOUSE_INPUT_LEFT))
 	{
 		//配列の空要素
 		if (bulletCount < 30 && bullets[bulletCount] == nullptr)
 		{
 			bullets[bulletCount] = new StraightBullets(GetLocation());
 		}
-
 	}
-
-
 }
 
 //描画
@@ -69,7 +74,7 @@ void Player::Draw()
 }
 
 //当たった時の処理
-void Player::Hit()
+void Player::Hit(int damage)
 {
 
 }
