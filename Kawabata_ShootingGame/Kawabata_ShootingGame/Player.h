@@ -13,6 +13,7 @@ public:
 	
 	bool LifeCheck();                  //"life"を確認
 	int GetScore() const;              //スコア取得
+	void AddScore(int score);          //スコア加算
 
 private:
 	int score;

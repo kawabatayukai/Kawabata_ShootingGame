@@ -27,9 +27,10 @@ GameMainScene::~GameMainScene()
 void GameMainScene::Update()
 {
 	player->UpDate();
-	
+
 	int enemyCount;
 	BulletsBase** bullet = player->GetBullets();   //Š‚µ‚Ä‚¢‚é’e‚ğæ“¾
+
 
 	for (enemyCount = 0; enemyCount < 10; enemyCount++)
 	{
@@ -42,20 +43,23 @@ void GameMainScene::Update()
 			if (bullet[bulletCount] == nullptr) break;   //nullptr‚Ì—v‘f‚æ‚èŒã‚É‚Í—v‘fÅ¼
 
 			//SphereCollider“¯m‚Ì“–‚½‚è”»’è
-			if ( enemy[enemyCount]->HitSphere( bullet[bulletCount]) )
+			if (enemy[enemyCount]->HitSphere(bullet[bulletCount]))
 			{
 				//“G‚É’e‚ªƒqƒbƒg
 
 				//“G‚Éƒ_ƒ[ƒW‚ª“ü‚é
-				enemy[enemyCount]-> Hit( bullet[bulletCount]->GetDamage() );
+				enemy[enemyCount]->Hit(bullet[bulletCount]->GetDamage());
 
 				//’e‚ğíœ
 				player->DeleteBullet(bulletCount);
 				bulletCount--;
 
 				//“G‚ÌHP <= 0 íœ‚·‚é
-				if (enemy[enemyCount]->CheckHp())
+				if (enemy[enemyCount]->CheckHp() == true)
 				{
+					//ƒXƒRƒA‰ÁZ
+					player->AddScore(enemy[enemyCount]->GetPoint());
+
 					delete enemy[enemyCount];
 					enemy[enemyCount] = nullptr;
 
@@ -67,15 +71,14 @@ void GameMainScene::Update()
 						enemy[i + 1] = nullptr;                //‹l‚ß‚½Œ³‚ğ‰Šú‰»
 					}
 					enemyCount--;
+					break;
 				}
-
 			}
 		}
-
 	}
 }
 
-//•`‰æi@^ ƒÖ ^j
+//•`‰æ
 void GameMainScene::Draw() const
 {
 	player->Draw();

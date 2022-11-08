@@ -88,3 +88,9 @@ bool Player::LifeCheck()
 
 //スコア取得
 int Player::GetScore() const { return score; }
+
+//スコア加算
+void Player::AddScore(int score)
+{
+	if (score >= 0)  this->score += score;
+}
