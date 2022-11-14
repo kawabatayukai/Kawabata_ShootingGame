@@ -22,6 +22,9 @@
     <Filter Include="ソース ファイル\Bullets">
       <UniqueIdentifier>{46d4c1c1-00e3-48af-a7c5-2f5c0c04cd18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Item">
+      <UniqueIdentifier>{e306ea41-1e61-4da3-85a8-8a4e5c3099e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,9 +45,6 @@
     <ClCompile Include="CharaBase.cpp">
       <Filter>ソース ファイル\Chara</Filter>
     </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
-      <Filter>ソース ファイル\Chara</Filter>
-    </ClCompile>
     <ClCompile Include="BulletsBase.cpp">
       <Filter>ソース ファイル\Bullets</Filter>
     </ClCompile>
@@ -56,6 +56,18 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBase.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="E_ITEM_TYPE.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Recovery.cpp">
+      <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +92,6 @@
     <ClInclude Include="CharaBase.h">
       <Filter>ソース ファイル\Chara</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.h">
-      <Filter>ソース ファイル\Chara</Filter>
-    </ClInclude>
     <ClInclude Include="BulletsBase.h">
       <Filter>ソース ファイル\Bullets</Filter>
     </ClInclude>
@@ -94,6 +103,18 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>ソース ファイル\Chara</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBase.h">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="E_ITEM_TYPE.h">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Recovery.h">
+      <Filter>ソース ファイル\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

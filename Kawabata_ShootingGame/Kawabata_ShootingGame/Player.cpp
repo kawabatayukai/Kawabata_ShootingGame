@@ -2,6 +2,10 @@
 #include "Player.h"
 #include"StraightBullets.h"
 #include"KeyManager.h"
+#include"Recovery.h"
+
+#define _DEBUG_MODE_
+
 
 //コンストラクタ          初期位置      　　　　　　   radius        speed               
 Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 5,5 }), score(0), life(10)
@@ -26,7 +30,7 @@ void Player::UpDate()
 	if (KeyManager::OnKeyPressed(KEY_INPUT_S)) newLoacation.y += speed.y;
 	if (KeyManager::OnKeyPressed(KEY_INPUT_A)) newLoacation.x -= speed.x;
 	if (KeyManager::OnKeyPressed(KEY_INPUT_D)) newLoacation.x += speed.x;
-	
+
 	SetLocation(newLoacation);
 
 
@@ -51,7 +55,7 @@ void Player::UpDate()
 		//配列の空要素
 		if (bulletCount < 30 && bullets[bulletCount] == nullptr)
 		{
-			bullets[bulletCount] = new StraightBullets(GetLocation());
+			bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,5 });
 		}
 	}
 }
@@ -59,6 +63,14 @@ void Player::UpDate()
 //描画
 void Player::Draw()
 {
+	//Debug
+
+#ifdef _DEBUG_MODE_
+
+	DrawFormatString(10, 10, GetColor(255, 255, 255), "life : %d", life);
+
+#endif
+
 	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 0, 0));
 
 
@@ -77,6 +89,28 @@ void Player::Draw()
 void Player::Hit(int damage)
 {
 
+}
+
+//アイテムの効果
+void Player::Hit(ItemBase* item)
+{
+	//アイテムのタイプを識別
+	switch (item->GetType())
+	{
+	case E_ITEM_TYPE::Heal:
+	{
+		//case文中で変数を作成する時は変数の寿命に配慮する
+		Recovery* recovery = dynamic_cast<Recovery*>(item);  //Recovery型に変換
+		life += recovery->GetVolume();                       //回復力をプラス
+	}
+	break;
+
+	case E_ITEM_TYPE::PowerUp:
+		break;
+
+	default:
+		break;
+	}
 }
 
 //"life"を確認

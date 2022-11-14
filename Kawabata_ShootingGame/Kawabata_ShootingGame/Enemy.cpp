@@ -13,7 +13,7 @@ void Enemy::UpDate()
 	//åªç›ÇÃà íu
 	T_LOCATION newLoacation = GetLocation();
 
-	newLoacation.y += 0.5;
+	newLoacation.y += speed.y;
 	SetLocation(newLoacation);
 }
 
