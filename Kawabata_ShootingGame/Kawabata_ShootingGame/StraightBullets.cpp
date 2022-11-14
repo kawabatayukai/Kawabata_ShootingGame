@@ -12,7 +12,7 @@ void StraightBullets::UpDate()
 {
 	T_LOCATION newlocation = GetLocation();    //次の座標
 	newlocation.y -= speed.y;                  //座標を変更
-
+	//newlocation.x += speed.x;
 	SetLocation(newlocation);                  //変更を反映
 }
 
@@ -26,7 +26,9 @@ void StraightBullets::Draw()
 bool StraightBullets::IsScreenOut()
 {
 	//StraightBulletsは上方向に直進のみ
-	bool ret = ((GetLocation().y + GetRadius()) <= 0);
+	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 480));
+
+	//if ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 480)) return true;
 
 	return ret;
 }
