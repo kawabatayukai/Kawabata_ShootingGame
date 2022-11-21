@@ -43,7 +43,7 @@ void GameMainScene::Update()
 		items[i]->UpDate();
 	}
 
-	//Enemy‚Ì“–‚½‚è”»’è
+	//Enemy‚ÆƒvƒŒƒCƒ„[‚Ì’e‚Ì“–‚½‚è”»’è
 	BulletsBase** bullet = player->GetBullets();   //Š‚µ‚Ä‚¢‚é’e‚ğæ“¾
 	for (enemyCount = 0; enemyCount < 10; enemyCount++)
 	{
@@ -80,7 +80,6 @@ void GameMainScene::Update()
 						}
 					}
 
-
 					//ƒXƒRƒA‰ÁZ
 					player->AddScore(enemy[enemyCount]->GetPoint());
 
@@ -97,6 +96,29 @@ void GameMainScene::Update()
 					enemyCount--;
 					break;
 				}
+			}
+		}
+	}
+
+	for (enemyCount = 0; enemyCount < 10; enemyCount++)
+	{
+		if (enemy[enemyCount] == nullptr) break;
+		bullet= enemy[enemyCount]->GetBullets();    //“G‚Ì•Û‚·‚é’e
+
+		for (int bulletCount = 0; bulletCount < 30; bulletCount++)
+		{
+			if (bullet[bulletCount] == nullptr) break;   //nullptr‚Ì—v‘f‚æ‚èŒã‚É‚Í—v‘fÅ¼
+
+			//SphereCollider“¯m‚Ì“–‚½‚è”»’è
+			if (player->HitSphere(bullet[bulletCount]))
+			{
+				//ƒvƒŒƒCƒ„[‚Éƒ_ƒ[ƒW‚ğ—^‚¦‚é
+				player->Hit(bullet[bulletCount]->GetDamage());
+
+				//’e‚ğíœ
+				enemy[enemyCount]->DeleteBullet(bulletCount);
+				bulletCount--;
+				break;
 			}
 		}
 	}

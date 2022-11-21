@@ -43,11 +43,12 @@ void Enemy::UpDate()
 		//”z—ñ‚Ì‹ó—v‘f
 		if (bulletCount < 30 && bullets[bulletCount] == nullptr)
 		{
-			//float x = GetRand(5)+1;
-			//float y = GetRand(5) * -1;
+			//int m = (GetRand(1) == 0 ? 1 : -1);
+			//float x = GetRand(5) + 1 * m;
+			//float y = GetRand(5) +1 * m;
 
 			//bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ x,y });
-			bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,-5 });
+			bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,5 });
 		}
 	}
 }

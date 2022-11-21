@@ -55,7 +55,7 @@ void Player::UpDate()
 		//配列の空要素
 		if (bulletCount < 30 && bullets[bulletCount] == nullptr)
 		{
-			bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,5 });
+			bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,-5 });
 		}
 	}
 }
@@ -71,8 +71,8 @@ void Player::Draw()
 
 #endif
 
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 0, 0));
-
+	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), 0xffffff);
+	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()) + 1, 0x00ffff,FALSE, 2);
 
 	for (int bulletCount = 0; bulletCount < 30; bulletCount++)
 	{
@@ -88,7 +88,11 @@ void Player::Draw()
 //当たった時の処理
 void Player::Hit(int damage)
 {
-
+	if (0 < damage)
+	{
+		life -= damage;          //HP減少
+		if (0 > life) life = 0;    //HPは0より下がらない
+	}
 }
 
 //アイテムの効果
