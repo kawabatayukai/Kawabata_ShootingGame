@@ -69,6 +69,9 @@
     <ClCompile Include="Recovery.cpp">
       <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
+    <ClCompile Include="VortexBullets.cpp">
+      <Filter>ソース ファイル\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -115,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="Recovery.h">
       <Filter>ソース ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="VortexBullets.h">
+      <Filter>ソース ファイル\Bullets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

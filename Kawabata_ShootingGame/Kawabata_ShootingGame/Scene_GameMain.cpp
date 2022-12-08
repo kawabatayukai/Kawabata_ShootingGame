@@ -16,7 +16,7 @@ GameMainScene::GameMainScene()
 	{
 		enemy[i] = nullptr;
 	}
-	enemy[0] = new Enemy(T_LOCATION{ 200,0 });
+	enemy[0] = new Enemy(T_LOCATION{ 600,300 });
 
 	//Item 10ŒÂ•ª‚Ìƒƒ‚ƒŠ‚ğŠm•Û
 	items = new ItemBase * [10];

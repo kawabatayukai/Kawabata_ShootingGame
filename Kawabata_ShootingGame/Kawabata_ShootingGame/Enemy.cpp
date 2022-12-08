@@ -1,9 +1,10 @@
 #include"DxLib.h"
 #include "Enemy.h"
 #include"StraightBullets.h"
+#include"VortexBullets.h"
 
 //コンストラクタ
-Enemy::Enemy(T_LOCATION location) : CharaBase(location, 20.0f, T_LOCATION{ 0,0.5 }), hp(10), point(10)
+Enemy::Enemy(T_LOCATION location) : CharaBase(location, 20.0f, T_LOCATION{ 0,0.0 }), hp(10), point(10), shotNum(0)
 {
 	//メモリを確保する Bullets** bullets 
 	bullets = new BulletsBase * [30];    //最大数　30  
@@ -34,22 +35,17 @@ void Enemy::UpDate()
 		if (bullets[bulletCount]->IsScreenOut() == true)
 		{
 			DeleteBullet(bulletCount);   //弾を削除する
+			//if (shotNum > 0) shotNum--;
+
 			bulletCount--;
 		}
 	}
 
-	if (GetRand(2) == 2)
+	//配列の空要素
+	if (bulletCount < 30 && bullets[bulletCount] == nullptr)
 	{
-		//配列の空要素
-		if (bulletCount < 30 && bullets[bulletCount] == nullptr)
-		{
-			//int m = (GetRand(1) == 0 ? 1 : -1);
-			//float x = GetRand(5) + 1 * m;
-			//float y = GetRand(5) +1 * m;
-
-			//bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ x,y });
-			bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,5 });
-		}
+		bullets[bulletCount] = new VortexBullets(GetLocation(), 3.0f, (20 * shotNum));
+		shotNum++;
 	}
 }
 

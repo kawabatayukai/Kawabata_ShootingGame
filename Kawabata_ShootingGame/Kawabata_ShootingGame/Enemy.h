@@ -16,5 +16,7 @@ public:
 private:
 	int hp;
 	int point;
+
+	int shotNum;   //”­Ë‚µ‚½”
 };
 
