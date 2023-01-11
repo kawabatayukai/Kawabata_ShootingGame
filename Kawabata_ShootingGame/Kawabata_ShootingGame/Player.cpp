@@ -12,9 +12,9 @@ Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 5,5
 {
 	//メモリを確保する Bullets** bullets 
 
-	bullets = new BulletsBase * [30];    //最大数　30  
+	bullets = new BulletsBase * [100];    //最大数　30  
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		bullets[i] = nullptr;
 	}
@@ -35,7 +35,7 @@ void Player::UpDate()
 
 
 	int bulletCount;
-	for (bulletCount = 0; bulletCount < 30; bulletCount++)
+	for (bulletCount = 0; bulletCount < 100; bulletCount++)
 	{
 		//配列の空要素
 		if (bullets[bulletCount] == nullptr) break;
@@ -53,7 +53,7 @@ void Player::UpDate()
 	if (KeyManager::OnMousePressed(MOUSE_INPUT_LEFT))
 	{
 		//配列の空要素
-		if (bulletCount < 30 && bullets[bulletCount] == nullptr)
+		if (bulletCount < 100 && bullets[bulletCount] == nullptr)
 		{
 			bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,-5 });
 		}
@@ -74,7 +74,7 @@ void Player::Draw()
 	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), 0xffffff);
 	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()) + 1, 0x00ffff,FALSE, 2);
 
-	for (int bulletCount = 0; bulletCount < 30; bulletCount++)
+	for (int bulletCount = 0; bulletCount < 100; bulletCount++)
 	{
 		//配列の空要素
 		if (bullets[bulletCount] == nullptr)

@@ -43,9 +43,9 @@ bool VortexBullets::IsScreenOut()
 {
 	
 	//StraightBullets‚Íã•ûŒü‚É’¼i‚Ì‚İ
-	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 720));
+	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 720)|| (GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
 	return ret;
 
-	ret = ((GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
-	return ret;
+	//ret = ((GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
+	//return ret;
 }

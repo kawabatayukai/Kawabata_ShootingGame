@@ -16,7 +16,8 @@ GameMainScene::GameMainScene()
 	{
 		enemy[i] = nullptr;
 	}
-	enemy[0] = new Enemy(T_LOCATION{ 600,300 });
+	//enemy[0] = new Enemy(T_LOCATION{ 600,300 });
+	enemy[0] = new Enemy();
 
 	//Item 10個分のメモリを確保
 	items = new ItemBase * [10];
@@ -52,7 +53,7 @@ void GameMainScene::Update()
 		enemy[enemyCount]->UpDate();
 
 		//敵と弾の当たり判定
-		for (int bulletCount = 0; bulletCount < 30; bulletCount++)
+		for (int bulletCount = 0; bulletCount < 100; bulletCount++)
 		{
 			if (bullet[bulletCount] == nullptr) break;   //nullptrの要素より後には要素ﾅｼ
 
@@ -105,7 +106,7 @@ void GameMainScene::Update()
 		if (enemy[enemyCount] == nullptr) break;
 		bullet= enemy[enemyCount]->GetBullets();    //敵の保持する弾
 
-		for (int bulletCount = 0; bulletCount < 30; bulletCount++)
+		for (int bulletCount = 0; bulletCount < 100; bulletCount++)
 		{
 			if (bullet[bulletCount] == nullptr) break;   //nullptrの要素より後には要素ﾅｼ
 
@@ -164,6 +165,8 @@ void GameMainScene::Draw() const
 		if (items[i] == nullptr) break;
 		items[i]->Draw();
 	}
+
+	DrawFormatString(0, 0, 0xffffff, "%f %f", enemy[0]->GetLocation().x, enemy[0]->GetLocation().y);
 }
 
 //シーンの変更
