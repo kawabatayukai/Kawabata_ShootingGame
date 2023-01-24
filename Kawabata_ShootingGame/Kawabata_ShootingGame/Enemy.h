@@ -21,5 +21,7 @@ private:
 
 	int shotNum;   //”­Ë‚µ‚½”
 	int nowlocation; //Œ»İ‚ÌÀ•W”Ô†
+
+	
 };
 

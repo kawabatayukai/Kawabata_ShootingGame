@@ -25,9 +25,9 @@ T_LOCATION locations[3] =
 //移動情報　敵の動き
 struct MoveInfo
 {
-	T_LOCATION targetLocation;   //目標
 	int pattern;                 //動く/動かない
-	int next;                    //
+	T_LOCATION targetLocation;   //目標
+	int next;                    //次はパターン〇番目
 	int waitTime;                //
 	int attackpattern;           //攻撃/攻撃しない  0:攻撃しない　0<n:攻撃
 };
@@ -35,16 +35,18 @@ struct MoveInfo
 //10パターン
 MoveInfo moveinfo[10] =
 {
-	{    640,150, 0, 1,  0, 0},
-	{1200.4f,150, 0, 2,  0, 0},
-	{      0,  0, 1, 3,180, 1},   //動かない 3秒間 攻撃
-	{  80.2f,150, 0, 4,  0, 2},   //動く　　　　　 攻撃
-	{      0,  0, 1, 5,180, 1},   //動かない 3秒間 攻撃
-	{1200.4f,150, 0, 2,  0, 1},   
+//  ﾊﾟﾀｰﾝ　　目的地　　next  time  attack
+	{ 0,  640.0f, 150.0f,  1,   0,  0}, //0 
+	{ 0, 1200.4f, 150.0f,  2,   0,  0}, //1
+	{ 1,    0.0f,   0.0f,  3, 300,  1}, //2    //動かない 3秒間 攻撃
+	{ 0,   80.2f, 150.0f,  4,   0,  2}, //3    //動く　　　　　 攻撃
+	{ 1,    0.0f,   0.0f,  5, 300,  1}, //4    //動かない 3秒間 攻撃
+	{ 0, 1200.4f, 150.0f,  2,   0,  1}, //5
 };
 
 int next[3] = { 1,2,1 }; //目標座標の添字
 int current = 0;         //現在〇番目の座標
+int frame_count = 0;     //フレームをカウント
 
 //コンストラクタ
 Enemy::Enemy(T_LOCATION location)
@@ -88,7 +90,30 @@ void Enemy::UpDate()
 	//	}
 	//}
 
-	Move();
+	
+	//パターン化された動き     0 : 動く/ 1 : 動かない 
+	switch (moveinfo[current].pattern)
+	{
+	case 0:   //動く
+		Move();
+		break;
+
+	case 1:   //動いていない
+
+		frame_count++;                         //フレームをカウント
+
+		//パターンで決められた待ち時間が経過
+		if (moveinfo[current].waitTime <= frame_count)
+		{
+			frame_count = 0;                   //カウントをリセット
+			current = moveinfo[current].next;  //次のパターンへ
+		}
+
+		break;
+
+	default:
+		break;
+	}
 
 	//newLoacation.x += speed.x;
 	//newLoacation.y += speed.y;
@@ -112,11 +137,25 @@ void Enemy::UpDate()
 		}
 	}
 
-	//配列の空要素
-	if (bulletCount < BULLETS_MAX && bullets[bulletCount] == nullptr)
+	//attackpattern が0出ないとき攻撃する
+	if (moveinfo[current].attackpattern != 0)
 	{
-		bullets[bulletCount] = new VortexBullets(GetLocation(), 3.0f, (20 * shotNum));
-		shotNum++;
+		//配列の空要素  弾を発射する
+		if (bulletCount < BULLETS_MAX && bullets[bulletCount] == nullptr)
+		{
+			if (moveinfo[current].attackpattern == 1)          //パターン1
+			{
+				//まっすぐ奴を生成
+				bullets[bulletCount]
+					= new StraightBullets(GetLocation(), T_LOCATION{ 0.0f,8.0f});
+			}
+			else if (moveinfo[current].attackpattern == 2)     //パターン2
+			{
+				//　　回転奴を生成
+				bullets[bulletCount] = new VortexBullets(GetLocation(), 3.0f, (20 * shotNum));
+				shotNum++;    //カウンターを増やす
+			}
+		}
 	}
 }
 
@@ -135,6 +174,8 @@ void Enemy::Draw()
 		}
 		bullets[bulletCount]->Draw();
 	}
+
+	DrawFormatString(0, 50, 0xffffff, "No. : %d", current);
 }
 
 //当たった時の処理
@@ -151,59 +192,119 @@ void Enemy::Hit(int damage)
 //一定の移動
 void Enemy::Move()
 {
-	//現在の位置
+	////現在の位置
+	//T_LOCATION nextLoacation = GetLocation();
+
+	//speed = { 5.0f,5.0f };
+
+	////目的座標と完全一致
+	//if ((nextLoacation.y == locations[current].y) && (nextLoacation.x == locations[current].x))
+	//{
+	//	current = next[current];
+	//}
+	//else
+	//{
+	//	//ｙ座標が不一致
+	//	if (nextLoacation.y != locations[current].y)
+	//	{
+	//		//目標座標のほうが大きい（目標は下）
+	//		if (nextLoacation.y < locations[current].y)
+	//		{
+	//			nextLoacation.y += speed.y;  //下方向
+
+	//			if ((GetLocation().y <= locations[current].y) && (locations[current].y <= nextLoacation.y))
+	//			{
+	//				nextLoacation.y = locations[current].y;  //到達後、目標を超えた場合停止
+	//			}
+	//		}
+	//		else
+	//		{
+	//			nextLoacation.y -= speed.y;  //上方向
+	//			if ((nextLoacation.y <= locations[current].y) && (locations[current].y <= GetLocation().y))
+	//			{
+	//				nextLoacation.y = locations[current].y;  //到達後、目標を超えた場合停止
+	//			}
+	//		}
+	//	}
+
+	//	//ｘ座標が不一致
+	//	if (nextLoacation.x != locations[current].x)
+	//	{
+	//		//目標座標のほうが大きい（目標は右）
+	//		if (nextLoacation.x < locations[current].x)
+	//		{
+	//			nextLoacation.x += speed.x;  //右方向
+	//			if ((GetLocation().x <= locations[current].x) && (locations[current].x <= nextLoacation.x))
+	//			{
+	//				nextLoacation.x = locations[current].x;  //到達後、目標を超えた場合停止
+	//			}
+	//		}
+	//		else
+	//		{
+	//			nextLoacation.x -= speed.x;
+	//			if ((nextLoacation.x <= locations[current].x) && (locations[current].x <= GetLocation().x))
+	//			{
+	//				nextLoacation.x = locations[current].x;  //到達後、目標を超えた場合停止
+	//			}
+	//		}
+	//	}
+	//}
+
+
+
+		//現在の位置
 	T_LOCATION nextLoacation = GetLocation();
 
-	speed = { 3.0f,3.0f };
+	speed = { 5.0f,5.0f };
 
 	//目的座標と完全一致
-	if ((nextLoacation.y == locations[current].y) && (nextLoacation.x == locations[current].x))
+	if ((nextLoacation.y == moveinfo[current].targetLocation.y) && (nextLoacation.x == moveinfo[current].targetLocation.x))
 	{
-		current = next[current];
+		current = moveinfo[current].next;   //完全一致で次のパターンへ
 	}
 	else
 	{
 		//ｙ座標が不一致
-		if (nextLoacation.y != locations[current].y)
+		if (nextLoacation.y != moveinfo[current].targetLocation.y)
 		{
 			//目標座標のほうが大きい（目標は下）
-			if (nextLoacation.y < locations[current].y)
+			if (nextLoacation.y < moveinfo[current].targetLocation.y)
 			{
 				nextLoacation.y += speed.y;  //下方向
 
-				if ((GetLocation().y <= locations[current].y) && (locations[current].y <= nextLoacation.y))
+				if ((GetLocation().y <= moveinfo[current].targetLocation.y) && (moveinfo[current].targetLocation.y <= nextLoacation.y))
 				{
-					nextLoacation.y = locations[current].y;  //到達後、目標を超えた場合停止
+					nextLoacation.y = moveinfo[current].targetLocation.y;  //到達後、目標を超えた場合停止
 				}
 			}
 			else
 			{
 				nextLoacation.y -= speed.y;  //上方向
-				if ((nextLoacation.y <= locations[current].y) && (locations[current].y <= GetLocation().y))
+				if ((nextLoacation.y <= moveinfo[current].targetLocation.y) && (moveinfo[current].targetLocation.y <= GetLocation().y))
 				{
-					nextLoacation.y = locations[current].y;  //到達後、目標を超えた場合停止
+					nextLoacation.y = moveinfo[current].targetLocation.y;  //到達後、目標を超えた場合停止
 				}
 			}
 		}
 
 		//ｘ座標が不一致
-		if (nextLoacation.x != locations[current].x)
+		if (nextLoacation.x != moveinfo[current].targetLocation.x)
 		{
 			//目標座標のほうが大きい（目標は右）
-			if (nextLoacation.x < locations[current].x)
+			if (nextLoacation.x < moveinfo[current].targetLocation.x)
 			{
 				nextLoacation.x += speed.x;  //右方向
-				if ((GetLocation().x <= locations[current].x) && (locations[current].x <= nextLoacation.x))
+				if ((GetLocation().x <= moveinfo[current].targetLocation.x) && (moveinfo[current].targetLocation.x <= nextLoacation.x))
 				{
-					nextLoacation.x = locations[current].x;  //到達後、目標を超えた場合停止
+					nextLoacation.x = moveinfo[current].targetLocation.x;  //到達後、目標を超えた場合停止
 				}
 			}
 			else
 			{
 				nextLoacation.x -= speed.x;
-				if ((nextLoacation.x <= locations[current].x) && (locations[current].x <= GetLocation().x))
+				if ((nextLoacation.x <= moveinfo[current].targetLocation.x) && (moveinfo[current].targetLocation.x <= GetLocation().x))
 				{
-					nextLoacation.x = locations[current].x;  //到達後、目標を超えた場合停止
+					nextLoacation.x = moveinfo[current].targetLocation.x;  //到達後、目標を超えた場合停止
 				}
 			}
 		}
