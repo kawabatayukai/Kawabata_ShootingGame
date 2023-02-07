@@ -165,8 +165,6 @@ void GameMainScene::Draw() const
 		if (items[i] == nullptr) break;
 		items[i]->Draw();
 	}
-
-	DrawFormatString(0, 0, 0xffffff, "%f %f", enemy[0]->GetLocation().x, enemy[0]->GetLocation().y);
 }
 
 //ƒV[ƒ“‚Ì•ÏX

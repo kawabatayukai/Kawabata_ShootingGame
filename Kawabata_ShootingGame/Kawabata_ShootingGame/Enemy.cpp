@@ -22,30 +22,7 @@ T_LOCATION locations[3] =
 	{80.2f,150},
 };
 
-//移動情報　敵の動き
-struct MoveInfo
-{
-	int pattern;                 //動く/動かない
-	T_LOCATION targetLocation;   //目標
-	int next;                    //次はパターン〇番目
-	int waitTime;                //
-	int attackpattern;           //攻撃/攻撃しない  0:攻撃しない　0<n:攻撃
-};
-
-//10パターン
-MoveInfo moveinfo[10] =
-{
-//  ﾊﾟﾀｰﾝ　　目的地　　next  time  attack
-	{ 0,  640.0f, 150.0f,  1,   0,  0}, //0 
-	{ 0, 1200.4f, 150.0f,  2,   0,  0}, //1
-	{ 1,    0.0f,   0.0f,  3, 300,  1}, //2    //動かない 3秒間 攻撃
-	{ 0,   80.2f, 150.0f,  4,   0,  2}, //3    //動く　　　　　 攻撃
-	{ 1,    0.0f,   0.0f,  5, 300,  1}, //4    //動かない 3秒間 攻撃
-	{ 0, 1200.4f, 150.0f,  2,   0,  1}, //5
-};
-
 int next[3] = { 1,2,1 }; //目標座標の添字
-int current = 0;         //現在〇番目の座標
 int frame_count = 0;     //フレームをカウント
 
 //コンストラクタ
@@ -59,6 +36,8 @@ Enemy::Enemy(T_LOCATION location)
 	{
 		bullets[i] = nullptr;
 	}
+
+	InputCSV();
 }
 
 //更新
@@ -152,7 +131,7 @@ void Enemy::UpDate()
 			else if (moveinfo[current].attackpattern == 2)     //パターン2
 			{
 				//　　回転奴を生成
-				bullets[bulletCount] = new VortexBullets(GetLocation(), 3.0f, (20 * shotNum));
+				bullets[bulletCount] = new VortexBullets(GetLocation(), 8.0f, (20 * shotNum));
 				shotNum++;    //カウンターを増やす
 			}
 		}
@@ -318,4 +297,44 @@ bool Enemy::CheckHp()
 {
 	bool ret = (hp <= 0);
 	return ret;
+}
+
+//csvファイル読み込み
+void Enemy::InputCSV()
+{
+	FILE* fp; /*FILE型構造体*/
+	errno_t error; /*fopen_sのエラー確認*/
+	error = fopen_s(&fp, "CSV/moveinfo.csv", "r");
+
+	/*(ブレイクポイントを付けて)ファイルの開閉テスト*/
+	if (error != 0)
+	{
+		return; //エラー発生
+	}
+	else //ファイルを開いた
+	{
+		char line[100]; //行
+		/*fgets(line, 文字数, fp)*/
+		//fgets(line, 100, fp);
+		//
+		for (int i = 0; fgets(line, 100, fp) != NULL; i++)
+		{
+
+
+			sscanf_s(
+				line, //行
+				"%d,%f,%f,%d,%d,%d",       //(int, float, float, int, int, int)
+				&moveinfo[i].pattern,          /*方法・パターン*/
+				&moveinfo[i].targetLocation.x, /*目的地.X座標*/
+				&moveinfo[i].targetLocation.y, /*目的地.Y座標*/
+				&moveinfo[i].next,             /*次の(配列)処理*/
+				&moveinfo[i].waitTime,    /*(待ちなど)時間*/
+				&moveinfo[i].attackpattern     /*攻撃方法*/
+			);
+
+			
+		}
+		return;
+	}
+	fclose(fp); /*ファイルを閉じる*/
 }
