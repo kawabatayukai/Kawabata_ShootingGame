@@ -2,12 +2,11 @@
 #include "AbstractScene.h"
 
 //タイトル
-class TitleScene : public AbstractScene
+class GameClearScene : public AbstractScene
 {
 public:
-	TitleScene();
-
-	~TitleScene();           //デストラクタ
+	GameClearScene();
+	~GameClearScene();           //デストラクタ
 
 	void Update() override;            //更新
 

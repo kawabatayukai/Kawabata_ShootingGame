@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include "Player.h"
 #include"StraightBullets.h"
+#include"VortexBullets.h"
 #include"KeyManager.h"
 #include"Recovery.h"
 
@@ -55,7 +56,9 @@ void Player::UpDate()
 		//”z—ñ‚Ì‹ó—v‘f
 		if (bulletCount < 100 && bullets[bulletCount] == nullptr)
 		{
-			bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,-5 });
+			//bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,-5 });
+			bullets[bulletCount] = new VortexBullets(GetLocation(), 8.0f, (20 * shotNum));
+			shotNum++;
 		}
 	}
 }

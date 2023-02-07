@@ -72,6 +72,12 @@
     <ClCompile Include="VortexBullets.cpp">
       <Filter>ソース ファイル\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_GameOver.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_GameClear.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -121,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="VortexBullets.h">
       <Filter>ソース ファイル\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_GameOver.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_GameClear.h">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

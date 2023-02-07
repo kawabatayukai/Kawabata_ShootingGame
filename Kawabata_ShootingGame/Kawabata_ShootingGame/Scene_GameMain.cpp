@@ -1,5 +1,7 @@
 #include"DxLib.h"
 #include"Scene_GameMain.h"
+#include"Scene_GameOver.h"
+#include"Scene_GameClear.h"
 #include"Recovery.h"
 
 //コンストラクタ
@@ -170,7 +172,12 @@ void GameMainScene::Draw() const
 //シーンの変更
 AbstractScene* GameMainScene::ChangeScene()
 {
-	//if(player->LifeCheck()==true) return dynamic_cast<AbstractScene*>(new TitleS)
+	//プレイヤー死亡でシーン切り替え
+	if (player->LifeCheck() == true) return dynamic_cast<AbstractScene*>(new GameOverScene());
+
+	//Enemy全滅でシーン切り替え
+	if(enemy[0]==nullptr) return dynamic_cast<AbstractScene*>(new GameClearScene());
+
 
 	//更新なし
 	return this;

@@ -19,5 +19,6 @@ public:
 private:
 	int score;
 	int life;
+	int shotNum = 0;
 };
 

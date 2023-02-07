@@ -1,13 +1,12 @@
 #pragma once
 #include "AbstractScene.h"
 
-//タイトル
-class TitleScene : public AbstractScene
+//ゲームオーバー
+class GameOverScene : public AbstractScene
 {
 public:
-	TitleScene();
-
-	~TitleScene();           //デストラクタ
+	GameOverScene();
+	~GameOverScene();           //デストラクタ
 
 	void Update() override;            //更新
 

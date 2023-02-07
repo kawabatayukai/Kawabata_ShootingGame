@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
     //シーンマネージャー     　　　　　　　　　　　　　　　ﾀｲﾄﾙを設定
-    SceneManager sceneMng( dynamic_cast<AbstractScene*>(new GameMainScene()) );
+    SceneManager sceneMng( dynamic_cast<AbstractScene*>(new TitleScene()) );
 
     while (ProcessMessage() == 0)
     {
