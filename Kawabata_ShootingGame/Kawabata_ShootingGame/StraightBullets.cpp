@@ -22,13 +22,13 @@ void StraightBullets::Draw()
 	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(0, 200, 0));
 }
 
-//画面外/内
-bool StraightBullets::IsScreenOut()
-{
-	//StraightBulletsは上方向に直進のみ
-	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 720));
-
-	//if ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 480)) return true;
-
-	return ret;
-}
+////画面外/内
+//bool StraightBullets::IsScreenOut()
+//{
+//	//StraightBulletsは上方向に直進のみ
+//	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 720));
+//
+//	//if ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 480)) return true;
+//
+//	return ret;
+//}

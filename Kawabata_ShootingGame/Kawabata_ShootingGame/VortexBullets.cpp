@@ -4,8 +4,8 @@
 
 #include "VortexBullets.h"
 
-VortexBullets::VortexBullets(T_LOCATION location, float speed, int angle)
-	: BulletsBase(location, 5.0f, 3, T_LOCATION{ 0,0 })  //上方向にまっすぐ
+VortexBullets::VortexBullets(T_LOCATION location, float speed, int angle, unsigned int color)
+	: BulletsBase(location, 5.0f, 3, T_LOCATION{ 0,0 }), color(color)
 {
 	//speed.x = cosf(angle* 3.14f / 180);
 	//speed.y = sinf(angle* 3.14f / 180);
@@ -35,17 +35,17 @@ void VortexBullets::UpDate()
 //描画
 void VortexBullets::Draw()
 {
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(0, 200, 0));
+	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), color);
 }
 
-//画面外/内
-bool VortexBullets::IsScreenOut()
-{
-	
-	//StraightBulletsは上方向に直進のみ
-	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 720)|| (GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
-	return ret;
-
-	//ret = ((GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
-	//return ret;
-}
+////画面外/内
+//bool VortexBullets::IsScreenOut()
+//{
+//	
+//	//StraightBulletsは上方向に直進のみ
+//	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 720)|| (GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
+//	return ret;
+//
+//	//ret = ((GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
+//	//return ret;
+//}

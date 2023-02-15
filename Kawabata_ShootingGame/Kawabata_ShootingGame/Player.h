@@ -7,7 +7,7 @@ class Player : public CharaBase
 public:
 	Player(T_LOCATION location);                //コンストラクタ
 
-	void UpDate() override;  //更新
+	void Update() override;  //更新
 	void Draw() override;    //描画
 	void Hit(int damage) override;     //当たった時の処理
 	void Hit(class ItemBase* item);    //アイテムの効果

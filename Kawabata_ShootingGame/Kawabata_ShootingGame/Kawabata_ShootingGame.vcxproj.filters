@@ -25,6 +25,9 @@
     <Filter Include="ソース ファイル\Item">
       <UniqueIdentifier>{e306ea41-1e61-4da3-85a8-8a4e5c3099e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\z.Other">
+      <UniqueIdentifier>{d2632f5c-f6a7-40cf-9de9-8000c45b87b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,9 +57,6 @@
     <ClCompile Include="KeyManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル\Chara</Filter>
-    </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -76,6 +76,24 @@
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene_GameClear.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_01.cpp">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="TakeAimBullets.cpp">
+      <Filter>ソース ファイル\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Base.cpp">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_00.cpp">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\z.Other</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_GameMain_Stage2.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,9 +128,6 @@
     <ClInclude Include="KeyManager.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ソース ファイル\Chara</Filter>
-    </ClInclude>
     <ClInclude Include="SphereCollider.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
@@ -132,6 +147,24 @@
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene_GameClear.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_01.h">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClInclude>
+    <ClInclude Include="TakeAimBullets.h">
+      <Filter>ソース ファイル\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Base.h">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_00.h">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ソース ファイル\z.Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_GameMain_Stage2.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>

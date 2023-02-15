@@ -1,7 +1,7 @@
 #pragma once
 #include"AbstractScene.h"
 #include"Player.h"
-#include"Enemy.h"
+#include"Enemy_Base.h"
 #include"ItemBase.h"
 
 //ƒQ[ƒ€ƒƒCƒ“
@@ -21,6 +21,6 @@ public:
 
 private:
 	Player* player;
-	Enemy** enemy;
+	Enemy_Base** enemy;
 	ItemBase** items;
 };

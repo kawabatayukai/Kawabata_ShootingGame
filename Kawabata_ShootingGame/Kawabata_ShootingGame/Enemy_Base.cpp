@@ -1,34 +1,26 @@
 #include"DxLib.h"
-#include "Enemy.h"
+#include"Enemy_Base.h"
 #include"StraightBullets.h"
 #include"VortexBullets.h"
 #include"TakeAimBullets.h"
 
-
-
-int frame_count = 0;     //フレームをカウント
-
 //コンストラクタ
-Enemy::Enemy(T_LOCATION location,int HP, const char* pass)
-	: CharaBase(location, 25.0f, T_LOCATION{ 0,0.0 }), hp(HP), point(10), shotNum(0)
+Enemy_Base::Enemy_Base(T_LOCATION location, float radius, T_LOCATION speed, const char* pass)
+	: CharaBase(location, radius, speed), moveinfo()
 {
-	//メモリを確保する Bullets** bullets 
+	//Bullet * BULLETS_MAX分のメモリを確保
 	bullets = new BulletsBase * [BULLETS_MAX];    //最大数　100  
 
-	for (int i = 0; i < BULLETS_MAX; i++)
-	{
-		bullets[i] = nullptr;
-	}
+	//初期化
+	for (int i = 0; i < BULLETS_MAX; i++) bullets[i] = nullptr;
 
-	//色を決める(いらない)
-	color = GetColor(255, 0, 255);
 
-	//csvファイル読み込み
-	InputCSV(pass);
+	//CSV読み込み
+	if (pass != nullptr) InputCSV(pass);
 }
 
 //更新
-void Enemy::Update()
+void Enemy_Base::Update()
 {
 
 	//パターン化された動き     0 : 動く/ 1 : 動かない 
@@ -67,7 +59,6 @@ void Enemy::Update()
 		if (bullets[bulletCount]->IsScreenOut() == true)
 		{
 			DeleteBullet(bulletCount);   //弾を削除する
-			//if (shotNum > 0) shotNum--;
 
 			bulletCount--;
 		}
@@ -97,8 +88,8 @@ void Enemy::Update()
 }
 
 //描画
-void Enemy::Draw()
-{	
+void Enemy_Base::Draw()
+{
 	//弾
 	for (int bulletCount = 0; bulletCount < BULLETS_MAX; bulletCount++)
 	{
@@ -113,7 +104,7 @@ void Enemy::Draw()
 	//画像がないとき
 	if (image == 0)
 	{
-		DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), color);
+		DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 0, 255));
 	}
 	else
 	{
@@ -125,7 +116,7 @@ void Enemy::Draw()
 }
 
 //当たった時の処理
-void Enemy::Hit(int damage)
+void Enemy_Base::Hit(int damage)
 {
 	//
 	if (0 < damage)
@@ -136,72 +127,10 @@ void Enemy::Hit(int damage)
 }
 
 //一定の移動
-void Enemy::Move()
+void Enemy_Base::Move()
 {
-	////現在の位置
-	//T_LOCATION nextLoacation = GetLocation();
-
-	//speed = { 5.0f,5.0f };
-
-	////目的座標と完全一致
-	//if ((nextLoacation.y == locations[current].y) && (nextLoacation.x == locations[current].x))
-	//{
-	//	current = next[current];
-	//}
-	//else
-	//{
-	//	//ｙ座標が不一致
-	//	if (nextLoacation.y != locations[current].y)
-	//	{
-	//		//目標座標のほうが大きい（目標は下）
-	//		if (nextLoacation.y < locations[current].y)
-	//		{
-	//			nextLoacation.y += speed.y;  //下方向
-
-	//			if ((GetLocation().y <= locations[current].y) && (locations[current].y <= nextLoacation.y))
-	//			{
-	//				nextLoacation.y = locations[current].y;  //到達後、目標を超えた場合停止
-	//			}
-	//		}
-	//		else
-	//		{
-	//			nextLoacation.y -= speed.y;  //上方向
-	//			if ((nextLoacation.y <= locations[current].y) && (locations[current].y <= GetLocation().y))
-	//			{
-	//				nextLoacation.y = locations[current].y;  //到達後、目標を超えた場合停止
-	//			}
-	//		}
-	//	}
-
-	//	//ｘ座標が不一致
-	//	if (nextLoacation.x != locations[current].x)
-	//	{
-	//		//目標座標のほうが大きい（目標は右）
-	//		if (nextLoacation.x < locations[current].x)
-	//		{
-	//			nextLoacation.x += speed.x;  //右方向
-	//			if ((GetLocation().x <= locations[current].x) && (locations[current].x <= nextLoacation.x))
-	//			{
-	//				nextLoacation.x = locations[current].x;  //到達後、目標を超えた場合停止
-	//			}
-	//		}
-	//		else
-	//		{
-	//			nextLoacation.x -= speed.x;
-	//			if ((nextLoacation.x <= locations[current].x) && (locations[current].x <= GetLocation().x))
-	//			{
-	//				nextLoacation.x = locations[current].x;  //到達後、目標を超えた場合停止
-	//			}
-	//		}
-	//	}
-	//}
-
-
-
-		//現在の位置
+    //現在の位置
 	T_LOCATION nextLoacation = GetLocation();
-
-	speed = { 5.0f,5.0f };
 
 	//目的座標と完全一致
 	if ((nextLoacation.y == moveinfo[current].targetLocation.y) && (nextLoacation.x == moveinfo[current].targetLocation.x))
@@ -260,21 +189,21 @@ void Enemy::Move()
 }
 
 //Hpチェック
-bool Enemy::CheckHp()
+bool Enemy_Base::CheckHp()
 {
 	bool ret = (hp <= 0);
 	return ret;
 }
 
 //プレイヤーの座標を取得
-void Enemy::SetTargetLocation(T_LOCATION location)
+void Enemy_Base::SetTargetLocation(T_LOCATION location)
 {
 	target = location;
 }
 
 
 //csvファイル読み込み
-void Enemy::InputCSV(const char* pass)
+void Enemy_Base::InputCSV(const char* pass)
 {
 	FILE* fp; /*FILE型構造体*/
 	errno_t error; /*fopen_sのエラー確認*/
@@ -306,7 +235,7 @@ void Enemy::InputCSV(const char* pass)
 				&moveinfo[i].attackpattern     /*攻撃方法*/
 			);
 
-			
+
 		}
 		return;
 	}

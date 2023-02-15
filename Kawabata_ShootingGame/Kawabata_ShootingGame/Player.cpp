@@ -9,7 +9,7 @@
 
 
 //コンストラクタ          初期位置      　　　　　　   radius        speed               
-Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 5,5 }), score(0), life(10)
+Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 5,5 }), score(0), life(500)
 {
 	//メモリを確保する Bullets** bullets 
 
@@ -22,7 +22,7 @@ Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 5,5
 }
 
 //更新
-void Player::UpDate()
+void Player::Update()
 {
 	//現在の位置
 	T_LOCATION newLoacation = GetLocation();
@@ -57,7 +57,7 @@ void Player::UpDate()
 		if (bulletCount < 100 && bullets[bulletCount] == nullptr)
 		{
 			//bullets[bulletCount] = new StraightBullets(GetLocation(), T_LOCATION{ 0,-5 });
-			bullets[bulletCount] = new VortexBullets(GetLocation(), 8.0f, (20 * shotNum));
+			bullets[bulletCount] = new VortexBullets(GetLocation(), 8.0f, (20 * shotNum), GetColor(255, 255, 0));
 			shotNum++;
 		}
 	}

@@ -11,7 +11,7 @@ public:
 	virtual void UpDate() override;           //更新
 	virtual void Draw() override;             //描画
 
-	virtual bool IsScreenOut() override;      //画面外/内
+	//virtual bool IsScreenOut() override;      //画面外/内
 
 private:
 

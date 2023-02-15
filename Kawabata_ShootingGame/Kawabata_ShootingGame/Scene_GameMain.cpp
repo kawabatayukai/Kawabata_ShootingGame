@@ -3,6 +3,8 @@
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
 #include"Recovery.h"
+#include"Enemy_01.h"
+#include"Enemy_00.h"
 
 //コンストラクタ
 GameMainScene::GameMainScene()
@@ -12,14 +14,16 @@ GameMainScene::GameMainScene()
 	//オブジェクトを生成・アドレス確保・コンストラクタ呼び出し
 	player = new Player(location);
 
-	//10匹分のメモリを確保
-	enemy = new Enemy * [10];
-	for (int i = 0; i < 10; i++)
-	{
-		enemy[i] = nullptr;
-	}
-	//enemy[0] = new Enemy(T_LOCATION{ 600,300 });
-	enemy[0] = new Enemy();
+	//Enemy10匹分のメモリを確保
+	enemy = new Enemy_Base * [10];    
+	
+	for (int i = 0; i < 10; i++) enemy[i] = nullptr;    //初期化
+
+	//初期座標・スピード（デフォルトで5）を設定
+	enemy[0] = new Enemy_00(T_LOCATION{ 640,0 });       //Enemy00を生成
+	enemy[1] = new Enemy_01(T_LOCATION{ 320,0 });       //Enemy01を生成
+	enemy[2] = new Enemy_00(T_LOCATION{ 820,730 }, T_LOCATION{1.f,1.f});       //Enemy01を生成
+	enemy[3] = new Enemy_01(T_LOCATION{ 120,0 }, T_LOCATION{20.f,20.f});       //Enemy01を生成
 
 	//Item 10個分のメモリを確保
 	items = new ItemBase * [10];
@@ -35,7 +39,7 @@ GameMainScene::~GameMainScene()
 //更新
 void GameMainScene::Update()
 {
-	player->UpDate();
+	player->Update();
 
 	int enemyCount;
 	
@@ -52,7 +56,10 @@ void GameMainScene::Update()
 	{
 		//Enemy更新
 		if (enemy[enemyCount] == nullptr)	break;       //nullptrの要素より後には要素ﾅｼ
-		enemy[enemyCount]->UpDate();
+		enemy[enemyCount]->Update();
+
+		//プレイヤーの座標を取得
+		enemy[enemyCount]->SetTargetLocation(player->GetLocation());  
 
 		//敵と弾の当たり判定
 		for (int bulletCount = 0; bulletCount < 100; bulletCount++)

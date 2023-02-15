@@ -154,6 +154,9 @@
     <ClCompile Include="BulletsBase.cpp" />
     <ClCompile Include="CharaBase.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Enemy_00.cpp" />
+    <ClCompile Include="Enemy_01.cpp" />
+    <ClCompile Include="Enemy_Base.cpp" />
     <ClCompile Include="E_ITEM_TYPE.cpp" />
     <ClCompile Include="ItemBase.cpp" />
     <ClCompile Include="KeyManager.cpp" />
@@ -163,10 +166,12 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene_GameClear.cpp" />
     <ClCompile Include="Scene_GameMain.cpp" />
+    <ClCompile Include="Scene_GameMain_Stage2.cpp" />
     <ClCompile Include="Scene_GameOver.cpp" />
     <ClCompile Include="Scene_Title.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="StraightBullets.cpp" />
+    <ClCompile Include="TakeAimBullets.cpp" />
     <ClCompile Include="VortexBullets.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +180,9 @@
     <ClInclude Include="CharaBase.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enemy_00.h" />
+    <ClInclude Include="Enemy_01.h" />
+    <ClInclude Include="Enemy_Base.h" />
     <ClInclude Include="E_ITEM_TYPE.h" />
     <ClInclude Include="ItemBase.h" />
     <ClInclude Include="KeyManager.h" />
@@ -183,10 +191,12 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene_GameClear.h" />
     <ClInclude Include="Scene_GameMain.h" />
+    <ClInclude Include="Scene_GameMain_Stage2.h" />
     <ClInclude Include="Scene_GameOver.h" />
     <ClInclude Include="Scene_Title.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="StraightBullets.h" />
+    <ClInclude Include="TakeAimBullets.h" />
     <ClInclude Include="VortexBullets.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
