@@ -96,6 +96,9 @@
     <ClCompile Include="Scene_GameMain_Stage2.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="BoundBullets.cpp">
+      <Filter>ソース ファイル\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="Scene_GameMain_Stage2.h">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundBullets.h">
+      <Filter>ソース ファイル\Bullets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

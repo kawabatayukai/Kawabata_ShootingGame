@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoundBullets.cpp" />
     <ClCompile Include="BulletsBase.cpp" />
     <ClCompile Include="CharaBase.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -176,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
+    <ClInclude Include="BoundBullets.h" />
     <ClInclude Include="BulletsBase.h" />
     <ClInclude Include="CharaBase.h" />
     <ClInclude Include="common.h" />
