@@ -14,6 +14,6 @@ public:
 	//virtual bool IsScreenOut() override;      //‰æ–ÊŠO/“à
 
 private:
-
+	int image;  //‰æ‘œ
 };
 

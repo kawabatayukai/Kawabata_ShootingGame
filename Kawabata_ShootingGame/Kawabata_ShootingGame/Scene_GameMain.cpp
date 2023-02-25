@@ -7,6 +7,8 @@
 #include"Enemy_01.h"
 #include"Enemy_00.h"
 
+
+
 //コンストラクタ
 GameMainScene::GameMainScene()
 {
@@ -26,12 +28,22 @@ GameMainScene::GameMainScene()
 	//Item 10個分のメモリを確保
 	items = new ItemBase * [10];
 	for (int i = 0; i < 10; i++) items[i] = nullptr;
-}
 
+
+	//画像読み込み
+	image_back = LoadGraph("images/Main_back.png");
+
+	//フォントを作成
+	font = CreateFontToHandle(NULL, 25, 7, DX_FONTTYPE_ANTIALIASING_EDGE_4X4);
+
+	//Lifeバー初期化
+	ui_box_y = BAR_BOTTOM - BAR_MAX;
+}
 //デストラクタ
 GameMainScene::~GameMainScene()
 {
-	//delete player;
+	//フォントデータを削除
+	DeleteFontToHandle(font);
 }
 
 //更新
@@ -169,11 +181,15 @@ void GameMainScene::Update()
 		}
 	}
 
+	UI_Update();
 }
 
 //描画
 void GameMainScene::Draw() const
 {
+	//背景
+	DrawGraph(0, 0, image_back, FALSE);
+
 	//player
 	player->Draw();
 
@@ -183,7 +199,7 @@ void GameMainScene::Draw() const
 		if (enemy[i] == nullptr) break;
 		enemy[i]->Draw();
 	}
-
+	
 	//Item
 	for (int i = 0; i < 10; i++)
 	{
@@ -194,8 +210,8 @@ void GameMainScene::Draw() const
 	
 	if (enemy[0] == nullptr)
 	{
-		DrawFormatString(100, 100, 0xffffff, "ステージ %d クリア", stage);
-		DrawString(100, 130, "スペースキーで次へ", 0xffffff);
+		DrawFormatStringToHandle(300, 100, 0xffffff, font,"STAGE %d CLEAR", stage);
+		DrawStringToHandle(300, 130, "Press Space Key", 0xffffff, font);
 	}
 
 	UI_Draw();
@@ -266,9 +282,28 @@ void GameMainScene::Stage_Init(int now_stage)
 	player->SetLocation(T_LOCATION{ P_INIT_X,P_INIT_Y });
 }
 
+//UI更新
+void GameMainScene::UI_Update()
+{
+	ui_box_y = BAR_BOTTOM - static_cast<float>(player->GetLife() * 2.5);
+	if (ui_box_y < (BAR_BOTTOM - BAR_MAX)) ui_box_y = BAR_BOTTOM - BAR_MAX;
+}
+
+
 //UI描画
 void GameMainScene::UI_Draw() const
 {
+	//UI描画エリア
 	DrawBox(PLAY_AREA_W, 0, 1280, 720, GetColor(0, 255, 0), TRUE);
-	DrawBox(PLAY_AREA_W + 10 , 10, 1280 - 10, 720 - 10, GetColor(0, 0, 0), TRUE);
+	DrawBox(PLAY_AREA_W + 10 , 10, 1280 - 10, 720 - 10, 0x696969, TRUE);
+
+	//プレイヤーLifeバー
+	DrawBox(1140, (BAR_BOTTOM - BAR_MAX - 10), (1130 + 110), BAR_BOTTOM + 10, 0xffffff, TRUE);
+	DrawBox(1150, (BAR_BOTTOM - BAR_MAX), (1150 + 80), BAR_BOTTOM, 0x000000, TRUE);
+	DrawBoxAA(1150, (ui_box_y), (1150 + 80), BAR_BOTTOM, 0xff69b4, TRUE);
+	
+	//"Life"  
+	DrawFormatStringToHandle(1120, 130, 0xffffff, font, "LIFE : %d", player->GetLife(), 0xffff00);
+	//"stage"
+	DrawFormatStringToHandle(1120, 80, 0xffffff, font, "Stage : %d", stage);
 }

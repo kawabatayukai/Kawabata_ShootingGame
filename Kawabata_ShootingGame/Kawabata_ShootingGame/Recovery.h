@@ -11,5 +11,6 @@ public:
 
 private:
 	int volume;     //‰ñ•œ—Ê
+	int image = 0;  //‰æ‘œ
 };
 

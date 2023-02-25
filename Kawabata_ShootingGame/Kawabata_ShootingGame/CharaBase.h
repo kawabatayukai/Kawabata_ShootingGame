@@ -18,7 +18,6 @@ public:
 
 protected:
 
-	int* image;
 	BulletsBase** bullets;        //ポインタ配列
 	T_LOCATION speed;
 

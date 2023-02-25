@@ -15,5 +15,6 @@ public:
 private:
 
 	unsigned int color;   //F
+	int image;            //‰æ‘œ
 };
 

@@ -93,9 +93,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\z.Other</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_GameMain_Stage2.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="BoundBullets.cpp">
       <Filter>ソース ファイル\Bullets</Filter>
     </ClCompile>
@@ -166,9 +163,6 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>ソース ファイル\z.Other</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_GameMain_Stage2.h">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="BoundBullets.h">
       <Filter>ソース ファイル\Bullets</Filter>

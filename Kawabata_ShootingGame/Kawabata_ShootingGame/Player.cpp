@@ -5,20 +5,21 @@
 #include"KeyManager.h"
 #include"Recovery.h"
 
-#define _DEBUG_MODE_
+//#define _DEBUG_MODE_
 
 
 //コンストラクタ          初期位置      　　　　　　   radius        speed               
-Player::Player(T_LOCATION location) : CharaBase(location, 10.0f, T_LOCATION{ 5,5 }), score(0), life(200)
+Player::Player(T_LOCATION location) : CharaBase(location, 25.0f, T_LOCATION{ 5,5 }), score(0), life(_LIFE_INIT)
 {
 	//メモリを確保する Bullets** bullets 
 
 	bullets = new BulletsBase * [100];    //最大数　30  
 
-	for (int i = 0; i < 100; i++)
-	{
-		bullets[i] = nullptr;
-	}
+	//弾配列を初期化
+	for (int i = 0; i < 100; i++) bullets[i] = nullptr;
+
+	//画像読み込み
+	image = LoadGraph("images/spray.png");
 }
 
 //更新
@@ -51,7 +52,7 @@ void Player::Update()
 	}
 
 
-	if (KeyManager::OnMousePressed(MOUSE_INPUT_LEFT))
+	if (KeyManager::OnMouseClicked(MOUSE_INPUT_LEFT))
 	{
 		//配列の空要素
 		if (bulletCount < 100 && bullets[bulletCount] == nullptr)
@@ -74,12 +75,12 @@ void Player::Draw()
 
 #endif
 
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), 0xffffff);
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()) + 1, 0x00ffff,FALSE, 2);
+	//0.5倍で描画
+	DrawRotaGraphF(GetLocation().x, GetLocation().y, 0.5, 0, image, TRUE);
 
 	for (int bulletCount = 0; bulletCount < 100; bulletCount++)
 	{
-		//配列の空要素
+		//配列の空要素なら処理しない
 		if (bullets[bulletCount] == nullptr)
 		{
 			break;
@@ -125,6 +126,12 @@ bool Player::LifeCheck()
 {
 	bool ret = (life <= 0);
 	return ret;
+}
+
+//life取得
+int Player::GetLife() const
+{
+	return life;
 }
 
 //スコア取得

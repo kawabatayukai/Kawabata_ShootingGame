@@ -2,9 +2,10 @@
 #include "StraightBullets.h"
 
 StraightBullets::StraightBullets(T_LOCATION location,T_LOCATION speed)
-	:BulletsBase(location, 5.0f, 5, speed)    //上方向にまっすぐ
+	:BulletsBase(location, 5.0f, 10, speed)    //上方向にまっすぐ
 {
-
+	//画像読み込み
+	image = LoadGraph("images/bullets1.png");
 }
 
 //更新
@@ -19,16 +20,6 @@ void StraightBullets::UpDate()
 //描画
 void StraightBullets::Draw()
 {
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(0, 200, 0));
+	//DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(0, 200, 0));
+	DrawRotaGraphF(GetLocation().x, GetLocation().y, 1, 0, image, TRUE);
 }
-
-////画面外/内
-//bool StraightBullets::IsScreenOut()
-//{
-//	//StraightBulletsは上方向に直進のみ
-//	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 720));
-//
-//	//if ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 480)) return true;
-//
-//	return ret;
-//}

@@ -12,6 +12,9 @@ TakeAimBullets::TakeAimBullets(T_LOCATION location, T_LOCATION p_location, float
 	//スピードを決める
 	this->speed.x = cosf(rad) * speed;
 	this->speed.y = sinf(rad) * speed;
+
+	//画像読み込み
+	image = LoadGraph("images/bullets3.png");
 }
 
 //更新
@@ -26,7 +29,8 @@ void TakeAimBullets::UpDate()
 //描画
 void TakeAimBullets::Draw()
 {
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 200, 0));
+	//DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 200, 0));
+	DrawRotaGraphF(GetLocation().x, GetLocation().y, 1, 0, image, TRUE);
 }
 
 //生成座標と目標座標との角度を求める
@@ -35,6 +39,6 @@ float TakeAimBullets::GetRadian(T_LOCATION self, T_LOCATION target)
 	float w = target.x - self.x;     //ｘ座標の差分（cosθ）
 	float h = target.y - self.y;     //ｙ座標の差分（sinθ）
 
-	//逆正接の主値を求める(?)
+	//逆正接の主値を求める
 	return atan2f(h, w);
 }

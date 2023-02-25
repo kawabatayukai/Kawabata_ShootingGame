@@ -11,6 +11,10 @@
 #define P_INIT_X    640.0f
 #define P_INIT_Y    500.0f
 
+//ui 
+#define BAR_BOTTOM  680   //プレイヤーlifeバーの下端
+#define BAR_MAX     500   //バーの最大長
+
 //ゲームメイン
 class GameMainScene : public AbstractScene
 {
@@ -27,6 +31,7 @@ public:
 
 	void Stage_Init(int now_stage);        //ステージ変更
 
+	void UI_Update();                      //UI更新
 	void UI_Draw() const;                  //UI描画
 
 private:
@@ -35,4 +40,9 @@ private:
 	ItemBase** items;
 
 	int stage = 1;    //ステージカウント変数
+
+	int image_back;   //背景画像
+	int font;         //フォントデータ
+
+	float ui_box_y;   //hpバーのy座標
 };

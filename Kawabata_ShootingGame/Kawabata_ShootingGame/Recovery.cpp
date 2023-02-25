@@ -3,9 +3,9 @@
 
 //コンストラクタ
 Recovery::Recovery(T_LOCATION location)                                        
-	:ItemBase(location, 5.0f, E_ITEM_TYPE::Heal, T_LOCATION{ 0,5 }), volume(20)//回復量20
+	:ItemBase(location, 12.0f, E_ITEM_TYPE::Heal, T_LOCATION{ 0,3 }), volume(20)//回復量20
 {
-
+	image = LoadGraph("images/recovery.png");
 }
 
 //更新
@@ -21,5 +21,13 @@ void Recovery::UpDate()
 //描画
 void Recovery::Draw() const
 {
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 0, 255));
+	//画像なし
+	if (image == 0)
+	{
+		DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 0, 255));
+	}
+	else
+	{
+		DrawRotaGraphF(GetLocation().x, GetLocation().y, 1, 0, image, TRUE);
+	}
 }

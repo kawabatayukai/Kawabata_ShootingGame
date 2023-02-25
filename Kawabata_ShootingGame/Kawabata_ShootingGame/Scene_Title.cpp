@@ -6,13 +6,18 @@
 //コンストラクタ
 TitleScene::TitleScene()
 {
-	SetFontSize(50);
+	//画像読み込み
+	image_back = LoadGraph("images/back.png");
+
+	//フォントを作成
+	font = CreateFontToHandle(NULL, 50, 10, DX_FONTTYPE_ANTIALIASING_EDGE_4X4);
 }
 
 //デストラクタ
 TitleScene::~TitleScene()
 {
-	SetFontSize(10);
+	//フォントデータを削除
+	DeleteFontToHandle(font);
 }
 
 //更新
@@ -24,7 +29,9 @@ void TitleScene::Update()
 //描画
 void TitleScene::Draw() const
 {
-	//
+	//背景
+	DrawGraph(0, 0, image_back, TRUE);
+
 	DrawString(100, 70, "タイトル", 0xffffff);
 	DrawString(100, 170, "スペースキーでスタート", 0xffffff);
 }

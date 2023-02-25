@@ -13,5 +13,8 @@ public:
 
 	//生成座標と目標座標との角度を求める
 	float GetRadian(T_LOCATION self, T_LOCATION target);
+
+private:
+	int image;    //画像
 };
 

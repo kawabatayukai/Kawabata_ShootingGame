@@ -5,11 +5,8 @@
 #include "VortexBullets.h"
 
 VortexBullets::VortexBullets(T_LOCATION location, float speed, int angle, unsigned int color)
-	: BulletsBase(location, 5.0f, 5, T_LOCATION{ 0,0 }), color(color)
+	: BulletsBase(location, 6.0f, 5, T_LOCATION{ 0,0 }), color(color)
 {
-	//speed.x = cosf(angle* 3.14f / 180);
-	//speed.y = sinf(angle* 3.14f / 180);
-
 	int deg = angle % 360;
 	double rad = (M_PI / 180) * deg;   //角度１の実数値＊360度法
 
@@ -19,6 +16,9 @@ VortexBullets::VortexBullets(T_LOCATION location, float speed, int angle, unsign
 
 	//(sin+cos)=1   縦と横に進む比率 sin・cosで
 	this->speed = T_LOCATION{ (speed * x),(speed * y) };
+
+	//画像読み込み
+	image = LoadGraph("images/bullets4.png");
 }
 
 //更新
@@ -35,17 +35,6 @@ void VortexBullets::UpDate()
 //描画
 void VortexBullets::Draw()
 {
-	DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), color);
+	//DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), color);
+	DrawRotaGraphF(GetLocation().x, GetLocation().y, 1, 0, image, TRUE);
 }
-
-////画面外/内
-//bool VortexBullets::IsScreenOut()
-//{
-//	
-//	//StraightBulletsは上方向に直進のみ
-//	bool ret = ((GetLocation().y + GetRadius()) <= 0 || (GetLocation().y - GetRadius() >= 720)|| (GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
-//	return ret;
-//
-//	//ret = ((GetLocation().x + GetRadius()) <= 0 || (GetLocation().x - GetRadius()) >= 1280);
-//	//return ret;
-//}
