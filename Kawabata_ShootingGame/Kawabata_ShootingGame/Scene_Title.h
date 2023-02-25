@@ -16,6 +16,8 @@ public:
 	AbstractScene* ChangeScene() override; //シーンの変更
 
 private:
+	int menu_num = 0;//セレクトNo.
+
 	int image_back;  //画像
 	int font;        //フォント
 };

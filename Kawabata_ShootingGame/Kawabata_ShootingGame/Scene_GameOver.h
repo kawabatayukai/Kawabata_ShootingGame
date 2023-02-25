@@ -17,5 +17,6 @@ public:
 private:
 	int image_back;  //‰æ‘œ
 	int font;        //ƒtƒHƒ“ƒg
+	int font1;
 };
 

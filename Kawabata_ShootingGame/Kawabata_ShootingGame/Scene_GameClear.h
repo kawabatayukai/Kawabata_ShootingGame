@@ -13,5 +13,10 @@ public:
 	void Draw() const override;        //描画
 
 	AbstractScene* ChangeScene() override; //シーンの変更
+
+private:
+	int image_back;  //画像
+	int font;        //フォント
+	int font1;
 };
 
