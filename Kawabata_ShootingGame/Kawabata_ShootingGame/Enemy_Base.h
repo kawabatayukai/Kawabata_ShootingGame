@@ -13,6 +13,13 @@ struct MoveInfo
 	int attackpattern;           //攻撃/攻撃しない  0:攻撃しない　0<n:攻撃
 };
 
+//向き
+enum class Direction
+{
+	LEFT,      //左
+	RIGHT      //右
+};
+
 //敵キャラの基底クラス
 class Enemy_Base : public CharaBase
 {
@@ -21,7 +28,7 @@ public:
 	Enemy_Base(T_LOCATION location, float radius, T_LOCATION speed, const char* pass = nullptr);
 
 	void Update() override;          //更新
-	void Draw()   override;          //描画
+	virtual void Draw()   override;  //描画
 	void Hit(int damage)  override;  //当たり（ダメージ）
 
 	void Move();                     //一定の移動
@@ -48,4 +55,6 @@ protected:
 	int point = 0;         //得点
 
 	int image = 0; //画像
+
+	Direction direction;   //向き
 };

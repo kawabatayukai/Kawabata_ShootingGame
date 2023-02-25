@@ -2,7 +2,7 @@
 #include "StraightBullets.h"
 
 StraightBullets::StraightBullets(T_LOCATION location,T_LOCATION speed)
-	:BulletsBase(location, 5.0f, 3, speed)    //ã•ûŒü‚É‚Ü‚Á‚·‚®
+	:BulletsBase(location, 5.0f, 5, speed)    //ã•ûŒü‚É‚Ü‚Á‚·‚®
 {
 
 }

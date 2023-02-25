@@ -4,7 +4,7 @@
 
 //出現位置、プレイヤーの座標、スピード
 TakeAimBullets::TakeAimBullets(T_LOCATION location, T_LOCATION p_location, float speed)
-	:BulletsBase(location, 5.0f, 3, T_LOCATION{0,0})
+	:BulletsBase(location, 5.0f, 5, T_LOCATION{0,0})
 {
 	//角度を決める
 	float rad = GetRadian(location, p_location);

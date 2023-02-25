@@ -3,7 +3,7 @@
 
 //コンストラクタ
 Recovery::Recovery(T_LOCATION location)                                        
-	:ItemBase(location, 5.0f, E_ITEM_TYPE::Heal, T_LOCATION{ 0,5 }), volume(2)//回復量2
+	:ItemBase(location, 5.0f, E_ITEM_TYPE::Heal, T_LOCATION{ 0,5 }), volume(20)//回復量20
 {
 
 }

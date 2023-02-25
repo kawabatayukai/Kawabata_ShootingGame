@@ -5,7 +5,7 @@
 #include "VortexBullets.h"
 
 VortexBullets::VortexBullets(T_LOCATION location, float speed, int angle, unsigned int color)
-	: BulletsBase(location, 5.0f, 3, T_LOCATION{ 0,0 }), color(color)
+	: BulletsBase(location, 5.0f, 5, T_LOCATION{ 0,0 }), color(color)
 {
 	//speed.x = cosf(angle* 3.14f / 180);
 	//speed.y = sinf(angle* 3.14f / 180);

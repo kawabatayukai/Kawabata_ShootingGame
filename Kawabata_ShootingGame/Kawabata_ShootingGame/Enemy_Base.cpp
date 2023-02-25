@@ -6,7 +6,7 @@
 
 //コンストラクタ
 Enemy_Base::Enemy_Base(T_LOCATION location, float radius, T_LOCATION speed, const char* pass)
-	: CharaBase(location, radius, speed), moveinfo()
+	: CharaBase(location, radius, speed), moveinfo(), direction(Direction::LEFT)
 {
 	//Bullet * BULLETS_MAX分のメモリを確保
 	bullets = new BulletsBase * [BULLETS_MAX];    //最大数　100  
@@ -68,19 +68,19 @@ void Enemy_Base::Update()
 	if (moveinfo[current].attackpattern != 0)
 	{
 		//配列の空要素  弾を発射する
-		if (bulletCount < BULLETS_MAX && bullets[bulletCount] == nullptr && frame_count % 10 == 0)
+		if (bulletCount < BULLETS_MAX && bullets[bulletCount] == nullptr && frame_count % 20 == 0)
 		{
 			if (moveinfo[current].attackpattern == 1)          //パターン1
 			{
 				//まっすぐ奴を生成
 				bullets[bulletCount]
 					//= new StraightBullets(GetLocation(), T_LOCATION{ 0.0f,8.0f});
-					= new TakeAimBullets(GetLocation(), target, 15.0f);
+					= new TakeAimBullets(GetLocation(), target, 8.0f);
 			}
 			else if (moveinfo[current].attackpattern == 2)     //パターン2
 			{
 				//　　回転奴を生成
-				bullets[bulletCount] = new VortexBullets(GetLocation(), 8.0f, (20 * shotNum));
+				bullets[bulletCount] = new VortexBullets(GetLocation(), 1.0f, (30 * shotNum));
 				shotNum++;    //カウンターを増やす
 			}
 		}
@@ -108,11 +108,10 @@ void Enemy_Base::Draw()
 	}
 	else
 	{
-		DrawRotaGraphF(GetLocation().x, GetLocation().y, 1, 0, image, TRUE);
+		//0.5倍
+		DrawRotaGraphF(GetLocation().x, GetLocation().y, 0.5, 0, image, TRUE);
 	}
 
-
-	DrawFormatString(0, 50, 0xffffff, "No. : %d", current);
 }
 
 //当たった時の処理
@@ -169,6 +168,8 @@ void Enemy_Base::Move()
 			if (nextLoacation.x < moveinfo[current].targetLocation.x)
 			{
 				nextLoacation.x += speed.x;  //右方向
+				direction = Direction::RIGHT;
+
 				if ((GetLocation().x <= moveinfo[current].targetLocation.x) && (moveinfo[current].targetLocation.x <= nextLoacation.x))
 				{
 					nextLoacation.x = moveinfo[current].targetLocation.x;  //到達後、目標を超えた場合停止
@@ -176,7 +177,9 @@ void Enemy_Base::Move()
 			}
 			else
 			{
-				nextLoacation.x -= speed.x;
+				nextLoacation.x -= speed.x;  //左方向
+				direction = Direction::LEFT;
+
 				if ((nextLoacation.x <= moveinfo[current].targetLocation.x) && (moveinfo[current].targetLocation.x <= GetLocation().x))
 				{
 					nextLoacation.x = moveinfo[current].targetLocation.x;  //到達後、目標を超えた場合停止

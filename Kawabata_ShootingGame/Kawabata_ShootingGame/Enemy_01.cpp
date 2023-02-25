@@ -6,8 +6,37 @@ Enemy_01::Enemy_01(T_LOCATION location, T_LOCATION speed)
 	: Enemy_Base(location, 25.0f, speed, "CSV/moveinfo1.csv")
 {
 	//‰æ‘œ“Ç‚İ‚İ
-	image = LoadGraph("images/golf.png");
+	image = LoadGraph("images/ka.png");
 
 	hp = 10;      //HP‚ğİ’è
 	point = 20;   //“¾“_‚ğİ’è
+}
+
+//•`‰æ
+void Enemy_01::Draw()
+{
+	//’e
+	for (int bulletCount = 0; bulletCount < BULLETS_MAX; bulletCount++)
+	{
+		//”z—ñ‚Ì‹ó—v‘f
+		if (bullets[bulletCount] == nullptr)
+		{
+			break;
+		}
+		bullets[bulletCount]->Draw();
+	}
+
+	//‰æ‘œ‚ª‚È‚¢‚Æ‚«
+	if (image == 0)
+	{
+		DrawCircle(static_cast<int>(GetLocation().x), static_cast<int>(GetLocation().y), static_cast<int>(GetRadius()), GetColor(255, 0, 255));
+	}
+	else
+	{
+		//Œ³‰æ‘œ‚Ì0.5”{
+
+		//Œü‚«‚É‚æ‚Á‚Ä”½“]/”½“]‚µ‚È‚¢
+		bool reverse = direction == Direction::RIGHT ? true : false;
+		DrawRotaGraphF(GetLocation().x, GetLocation().y, 0.5, 0, image, TRUE, reverse);
+	}
 }

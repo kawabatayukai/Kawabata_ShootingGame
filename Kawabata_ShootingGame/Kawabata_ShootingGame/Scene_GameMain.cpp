@@ -1,4 +1,5 @@
 #include"DxLib.h"
+#include"KeyManager.h"
 #include"Scene_GameMain.h"
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
@@ -9,10 +10,9 @@
 //コンストラクタ
 GameMainScene::GameMainScene()
 {
-	T_LOCATION location = T_LOCATION{ 20,100 };
 
-	//オブジェクトを生成・アドレス確保・コンストラクタ呼び出し
-	player = new Player(location);
+	//オブジェクトを生成・メモリ確保・コンストラクタ呼び出し
+	player = new Player(T_LOCATION{ P_INIT_X,P_INIT_Y });
 
 	//Enemy10匹分のメモリを確保
 	enemy = new Enemy_Base * [10];    
@@ -20,10 +20,8 @@ GameMainScene::GameMainScene()
 	for (int i = 0; i < 10; i++) enemy[i] = nullptr;    //初期化
 
 	//初期座標・スピード（デフォルトで5）を設定
-	enemy[0] = new Enemy_00(T_LOCATION{ 640,0 });       //Enemy00を生成
-	enemy[1] = new Enemy_01(T_LOCATION{ 320,0 });       //Enemy01を生成
-	enemy[2] = new Enemy_00(T_LOCATION{ 820,730 }, T_LOCATION{1.f,1.f});       //Enemy01を生成
-	enemy[3] = new Enemy_01(T_LOCATION{ 120,0 }, T_LOCATION{20.f,20.f});       //Enemy01を生成
+	enemy[0] = new Enemy_00(T_LOCATION{ 640,0 },T_LOCATION{ 4.f,4.f });       //Enemy00を生成
+	enemy[1] = new Enemy_00(T_LOCATION{ -10,730 }, T_LOCATION{ 4.f,4.f });       //Enemy01を生成
 
 	//Item 10個分のメモリを確保
 	items = new ItemBase * [10];
@@ -40,6 +38,20 @@ GameMainScene::~GameMainScene()
 void GameMainScene::Update()
 {
 	player->Update();
+
+	//プレイヤー移動範囲の制限
+	float x = player->GetLocation().x;
+	float y = player->GetLocation().y;
+	float r = player->GetRadius();
+
+	//左端
+	if ((x - r) < 0)           player->SetLocation(T_LOCATION{ r,y });   
+	//右端
+	if ((x + r) > PLAY_AREA_W) player->SetLocation(T_LOCATION{ (PLAY_AREA_W - r),y });   
+	//上端
+	if ((y - r) < 0)           player->SetLocation(T_LOCATION{ x,r });
+	//下端
+	if ((y + r) > 720)         player->SetLocation(T_LOCATION{ x,(720 - r) });
 
 	int enemyCount;
 	
@@ -162,18 +174,31 @@ void GameMainScene::Update()
 //描画
 void GameMainScene::Draw() const
 {
+	//player
 	player->Draw();
+
+	//Enemy
 	for (int i = 0; i < 10; i++)
 	{
 		if (enemy[i] == nullptr) break;
 		enemy[i]->Draw();
 	}
 
+	//Item
 	for (int i = 0; i < 10; i++)
 	{
 		if (items[i] == nullptr) break;
 		items[i]->Draw();
 	}
+
+	
+	if (enemy[0] == nullptr)
+	{
+		DrawFormatString(100, 100, 0xffffff, "ステージ %d クリア", stage);
+		DrawString(100, 130, "スペースキーで次へ", 0xffffff);
+	}
+
+	UI_Draw();
 }
 
 //シーンの変更
@@ -182,10 +207,68 @@ AbstractScene* GameMainScene::ChangeScene()
 	//プレイヤー死亡でシーン切り替え
 	if (player->LifeCheck() == true) return dynamic_cast<AbstractScene*>(new GameOverScene());
 
-	//Enemy全滅でシーン切り替え
-	if(enemy[0]==nullptr) return dynamic_cast<AbstractScene*>(new GameClearScene());
+
+	//Enemy全滅で次のステージ
+	if (enemy[0] == nullptr && stage < 4)
+	{
+		//初期化
+		if (KeyManager::OnKeyClicked(KEY_INPUT_SPACE))
+		{
+			Stage_Init(stage);
+			stage++;
+		}
+		
+	}
+
+	if (enemy[0] == nullptr && stage == 4)
+		return dynamic_cast<AbstractScene*>(new GameClearScene());
 
 
 	//更新なし
 	return this;
+}
+
+//ステージ変更
+void GameMainScene::Stage_Init(int now_stage)
+{
+	//敵を初期化
+	for (int i = 0; i < 10; i++) enemy[i] = nullptr;    
+
+	//敵を生成（now_stage : 現在のステージ）
+	switch (now_stage)
+	{
+	case 1:               //ステージ1の時、ステージ2へ
+		enemy[0] = new Enemy_00(T_LOCATION{ 640,0 });
+		enemy[1] = new Enemy_00(T_LOCATION{ 320,0 });
+		enemy[2] = new Enemy_01(T_LOCATION{ 640,0 });
+		enemy[3] = new Enemy_01(T_LOCATION{ 320,0 });
+		break;
+
+	case 2:
+		enemy[0] = new Enemy_00(T_LOCATION{ 640,0 });
+		enemy[1] = new Enemy_00(T_LOCATION{ 320,0 });
+		enemy[2] = new Enemy_01(T_LOCATION{ 640,0 });
+		enemy[3] = new Enemy_01(T_LOCATION{ 320,0 });
+		enemy[4] = new Enemy_00(T_LOCATION{ 330,0 });
+		enemy[5] = new Enemy_00(T_LOCATION{ 560,0 });
+		enemy[6] = new Enemy_01(T_LOCATION{ 140,0 });
+		enemy[7] = new Enemy_01(T_LOCATION{ 80,0 });
+		break;
+
+	default:
+		break;
+	}
+
+
+
+
+	//プレイヤーの座標を初期化
+	player->SetLocation(T_LOCATION{ P_INIT_X,P_INIT_Y });
+}
+
+//UI描画
+void GameMainScene::UI_Draw() const
+{
+	DrawBox(PLAY_AREA_W, 0, 1280, 720, GetColor(0, 255, 0), TRUE);
+	DrawBox(PLAY_AREA_W + 10 , 10, 1280 - 10, 720 - 10, GetColor(0, 0, 0), TRUE);
 }
