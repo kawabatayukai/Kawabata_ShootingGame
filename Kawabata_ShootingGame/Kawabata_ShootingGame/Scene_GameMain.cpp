@@ -22,9 +22,10 @@ GameMainScene::GameMainScene()
 	for (int i = 0; i < 10; i++) enemy[i] = nullptr;    //初期化
 
 	//初期座標・スピード（デフォルトで5）を設定
-	enemy[0] = new Enemy_00(T_LOCATION{ 640,0 },T_LOCATION{ 4.f,4.f });       //Enemy00を生成
+	enemy[0] = new Enemy_00(T_LOCATION{ 550,0 },T_LOCATION{ 4.f,4.f });       //Enemy00を生成
 	enemy[1] = new Enemy_00(T_LOCATION{ -10,730 }, T_LOCATION{ 4.f,4.f });       //Enemy01を生成
-	//enemy[2] = new Enemy_01(T_LOCATION{ -10,730 }, T_LOCATION{ 5.f,5.f });
+	enemy[2] = new Enemy_01(T_LOCATION{ 1280,730 }, T_LOCATION{ 5.f,5.f });
+	enemy[3] = new Enemy_01(T_LOCATION{ 1280,760 }, T_LOCATION{ 5.3f,5.3f });
 
 	//Item 10個分のメモリを確保
 	items = new ItemBase * [10];
@@ -164,6 +165,7 @@ void GameMainScene::Update()
 	for (int itemCount = 0; itemCount < 10; itemCount++)
 	{
 		if (items[itemCount] == nullptr) break;   //nullptrの要素より後には要素ﾅｼ
+		
 
 		if (items[itemCount]->HitSphere(player) == true)
 		{
@@ -181,7 +183,6 @@ void GameMainScene::Update()
 				items[i + 1] = nullptr;                //詰めた元を初期化
 			}
 			itemCount--;
-			break;
 		}
 	}
 
@@ -225,7 +226,7 @@ void GameMainScene::Draw() const
 AbstractScene* GameMainScene::ChangeScene()
 {
 	//プレイヤー死亡でシーン切り替え
-	if (player->LifeCheck() == true) return dynamic_cast<AbstractScene*>(new GameOverScene());
+	if (player->LifeCheck() == true) return dynamic_cast<AbstractScene*>(new GameOverScene( player->GetScore() ) );
 
 
 	//Enemy全滅で次のステージ
@@ -240,8 +241,9 @@ AbstractScene* GameMainScene::ChangeScene()
 		
 	}
 
+	//ステージ3以上でクリア
 	if (enemy[0] == nullptr && stage == 4)
-		return dynamic_cast<AbstractScene*>(new GameClearScene());
+		return dynamic_cast<AbstractScene*>( new GameClearScene( player->GetScore() ) );
 
 
 	//更新なし
@@ -310,4 +312,6 @@ void GameMainScene::UI_Draw() const
 	DrawFormatStringToHandle(1120, 130, 0xffffff, font, "LIFE : %d", player->GetLife(), 0xffff00);
 	//"stage"
 	DrawFormatStringToHandle(1120, 80, 0xffffff, font, "Stage : %d", stage);
+	//"Score"
+	DrawFormatStringToHandle(1120, 30, 0xffffff, font, "Score:%d", player->GetScore());
 }

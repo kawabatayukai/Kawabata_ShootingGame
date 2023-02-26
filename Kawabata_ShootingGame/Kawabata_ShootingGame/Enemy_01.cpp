@@ -11,7 +11,7 @@ Enemy_01::Enemy_01(T_LOCATION location, T_LOCATION speed)
 	image = LoadGraph("images/ka.png");
 
 	hp = 10;      //HPを設定
-	point = 20;   //得点を設定
+	point = 200;  //得点を設定
 
 	//弾のスピードを設定
 	SetBulletsSpeed(Bullet_Type::TakeAim, 7.0f);

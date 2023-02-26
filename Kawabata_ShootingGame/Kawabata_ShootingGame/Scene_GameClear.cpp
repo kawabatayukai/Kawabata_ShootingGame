@@ -4,7 +4,7 @@
 #include"Scene_Title.h"
 
 //コンストラクタ
-GameClearScene::GameClearScene()
+GameClearScene::GameClearScene(int score) : last_score(score)
 {
 	//画像読み込み
 	image_back = LoadGraph("images/back.png");
@@ -37,7 +37,10 @@ void GameClearScene::Draw() const
 	DrawGraph(0, 0, image_back, TRUE);
 
 	DrawStringToHandle(280, 150, "Game Clear", 0xffa500, font, 0x000000);
-	DrawStringToHandle(380, 500, "Press Space To Title", 0xffa500, font1, 0x000000);
+	DrawStringToHandle(380, 600, "Press Space To Title", 0xffa500, font1, 0x000000);
+
+	//Score
+	DrawFormatStringToHandle(380, 450, 0xffa500, font1, "score : %d", last_score);
 }
 
 //シーンの変更

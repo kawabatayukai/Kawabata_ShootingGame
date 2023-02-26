@@ -5,7 +5,8 @@
 class GameClearScene : public AbstractScene
 {
 public:
-	GameClearScene();
+	//コンストラクタ（スコアをもらう）
+	GameClearScene(int score = 0);
 	~GameClearScene();           //デストラクタ
 
 	void Update() override;            //更新
@@ -15,6 +16,8 @@ public:
 	AbstractScene* ChangeScene() override; //シーンの変更
 
 private:
+	int last_score;  //表示するスコア
+
 	int image_back;  //画像
 	int font;        //フォント
 	int font1;
