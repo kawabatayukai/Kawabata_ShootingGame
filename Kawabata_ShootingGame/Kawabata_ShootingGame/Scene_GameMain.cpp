@@ -24,6 +24,7 @@ GameMainScene::GameMainScene()
 	//初期座標・スピード（デフォルトで5）を設定
 	enemy[0] = new Enemy_00(T_LOCATION{ 640,0 },T_LOCATION{ 4.f,4.f });       //Enemy00を生成
 	enemy[1] = new Enemy_00(T_LOCATION{ -10,730 }, T_LOCATION{ 4.f,4.f });       //Enemy01を生成
+	//enemy[2] = new Enemy_01(T_LOCATION{ -10,730 }, T_LOCATION{ 5.f,5.f });
 
 	//Item 10個分のメモリを確保
 	items = new ItemBase * [10];
@@ -134,6 +135,7 @@ void GameMainScene::Update()
 		}
 	}
 
+	//プレイヤーと敵の弾の当たり判定
 	for (enemyCount = 0; enemyCount < 10; enemyCount++)
 	{
 		if (enemy[enemyCount] == nullptr) break;
@@ -142,6 +144,7 @@ void GameMainScene::Update()
 		for (int bulletCount = 0; bulletCount < 100; bulletCount++)
 		{
 			if (bullet[bulletCount] == nullptr) break;   //nullptrの要素より後には要素ﾅｼ
+
 
 			//SphereCollider同士の当たり判定
 			if (player->HitSphere(bullet[bulletCount]))
@@ -178,6 +181,7 @@ void GameMainScene::Update()
 				items[i + 1] = nullptr;                //詰めた元を初期化
 			}
 			itemCount--;
+			break;
 		}
 	}
 
@@ -254,21 +258,21 @@ void GameMainScene::Stage_Init(int now_stage)
 	switch (now_stage)
 	{
 	case 1:               //ステージ1の時、ステージ2へ
-		enemy[0] = new Enemy_00(T_LOCATION{ 640,0 });
-		enemy[1] = new Enemy_00(T_LOCATION{ 320,0 });
-		enemy[2] = new Enemy_01(T_LOCATION{ 640,0 });
-		enemy[3] = new Enemy_01(T_LOCATION{ 320,0 });
+		enemy[0] = new Enemy_00(T_LOCATION{ 550,0 }, T_LOCATION{ 6.f,6.f });
+		enemy[1] = new Enemy_00(T_LOCATION{ -20,740 }, T_LOCATION{ 6.f,6.f });
+		enemy[2] = new Enemy_01(T_LOCATION{ 550,-50 });
+		enemy[3] = new Enemy_01(T_LOCATION{ -20,740 });
 		break;
 
 	case 2:
-		enemy[0] = new Enemy_00(T_LOCATION{ 640,0 });
-		enemy[1] = new Enemy_00(T_LOCATION{ 320,0 });
-		enemy[2] = new Enemy_01(T_LOCATION{ 640,0 });
-		enemy[3] = new Enemy_01(T_LOCATION{ 320,0 });
-		enemy[4] = new Enemy_00(T_LOCATION{ 330,0 });
-		enemy[5] = new Enemy_00(T_LOCATION{ 560,0 });
-		enemy[6] = new Enemy_01(T_LOCATION{ 140,0 });
-		enemy[7] = new Enemy_01(T_LOCATION{ 80,0 });
+		enemy[0] = new Enemy_00(T_LOCATION{ 0,0 }, T_LOCATION{ 5.5f,5.5f });
+		enemy[1] = new Enemy_00(T_LOCATION{ 550,0 }, T_LOCATION{ 6.f,6.f });
+		enemy[2] = new Enemy_00(T_LOCATION{ 1650,0 }, T_LOCATION{ 6.5f,6.5f });
+		enemy[3] = new Enemy_00(T_LOCATION{ 320,0 }, T_LOCATION{ 7.f,7.f });
+		enemy[4] = new Enemy_01(T_LOCATION{ 550,740 }, T_LOCATION{ 5.5f,5.5f });
+		enemy[5] = new Enemy_01(T_LOCATION{ 550,780 }, T_LOCATION{ 6.f,6.f });
+		enemy[6] = new Enemy_01(T_LOCATION{ 550,820 }, T_LOCATION{ 6.5f,6.5f });
+		enemy[7] = new Enemy_01(T_LOCATION{ 550,860 }, T_LOCATION{ 7.f,7.f });
 		break;
 
 	default:

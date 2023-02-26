@@ -93,7 +93,7 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\z.Other</Filter>
     </ClCompile>
-    <ClCompile Include="BoundBullets.cpp">
+    <ClCompile Include="HomingBullets.cpp">
       <Filter>ソース ファイル\Bullets</Filter>
     </ClCompile>
   </ItemGroup>
@@ -164,7 +164,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>ソース ファイル\z.Other</Filter>
     </ClInclude>
-    <ClInclude Include="BoundBullets.h">
+    <ClInclude Include="HomingBullets.h">
       <Filter>ソース ファイル\Bullets</Filter>
     </ClInclude>
   </ItemGroup>

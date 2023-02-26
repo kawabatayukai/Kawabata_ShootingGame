@@ -1,5 +1,7 @@
 #include"DxLib.h"
 #include"Enemy_01.h"
+#include"TakeAimBullets.h"
+#include"VortexBullets.h"
 
 //コンストラクタ
 Enemy_01::Enemy_01(T_LOCATION location, T_LOCATION speed)
@@ -10,7 +12,13 @@ Enemy_01::Enemy_01(T_LOCATION location, T_LOCATION speed)
 
 	hp = 10;      //HPを設定
 	point = 20;   //得点を設定
+
+	//弾のスピードを設定
+	SetBulletsSpeed(Bullet_Type::TakeAim, 7.0f);
+	SetBulletsSpeed(Bullet_Type::Vortex, 6.0f);
+	SetBulletsSpeed(Bullet_Type::Homing, 5.0f);
 }
+
 
 //描画
 void Enemy_01::Draw()

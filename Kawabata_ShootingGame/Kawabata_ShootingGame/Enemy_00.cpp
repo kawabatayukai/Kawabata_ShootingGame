@@ -10,6 +10,11 @@ Enemy_00::Enemy_00(T_LOCATION location, T_LOCATION speed)
 	
 	hp = 10;      //HPを設定
 	point = 10;   //得点を設定
+
+	//弾のスピードを設定
+	SetBulletsSpeed(Bullet_Type::TakeAim, 6.0f);
+	SetBulletsSpeed(Bullet_Type::Vortex, 1.0f);
+	SetBulletsSpeed(Bullet_Type::Homing, 7.0f);
 }
 
 //描画

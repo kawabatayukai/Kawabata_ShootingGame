@@ -3,6 +3,7 @@
 #include"StraightBullets.h"
 #include"VortexBullets.h"
 #include"TakeAimBullets.h"
+#include"HomingBullets.h"
 
 //コンストラクタ
 Enemy_Base::Enemy_Base(T_LOCATION location, float radius, T_LOCATION speed, const char* pass)
@@ -51,9 +52,11 @@ void Enemy_Base::Update()
 	int bulletCount;
 	for (bulletCount = 0; bulletCount < BULLETS_MAX; bulletCount++)
 	{
-		//配列の空要素
+		//配列の空要素なら抜ける
 		if (bullets[bulletCount] == nullptr) break;
-		bullets[bulletCount]->UpDate();
+
+		bullets[bulletCount]->Update();
+		bullets[bulletCount]->SetTargetLocation(target);
 
 		//画面外で削除する
 		if (bullets[bulletCount]->IsScreenOut() == true)
@@ -68,20 +71,27 @@ void Enemy_Base::Update()
 	if (moveinfo[current].attackpattern != 0)
 	{
 		//配列の空要素  弾を発射する
-		if (bulletCount < BULLETS_MAX && bullets[bulletCount] == nullptr && frame_count % 20 == 0)
+		if (bulletCount < BULLETS_MAX && bullets[bulletCount] == nullptr && frame_count % 30 == 0)
 		{
 			if (moveinfo[current].attackpattern == 1)          //パターン1
 			{
-				//まっすぐ奴を生成
+				//自機狙い
 				bullets[bulletCount]
-					//= new StraightBullets(GetLocation(), T_LOCATION{ 0.0f,8.0f});
-					= new TakeAimBullets(GetLocation(), target, 8.0f);
+					= new TakeAimBullets(GetLocation(), target, speed_TakeAim);
+				
 			}
 			else if (moveinfo[current].attackpattern == 2)     //パターン2
 			{
-				//　　回転奴を生成
-				bullets[bulletCount] = new VortexBullets(GetLocation(), 1.0f, (30 * shotNum));
+				//回転弾を生成
+				bullets[bulletCount] = 
+					new VortexBullets(GetLocation(), speed_Vortex, (30 * shotNum));
 				shotNum++;    //カウンターを増やす
+			}
+			else if (moveinfo[current].attackpattern == 3)     //パターン2
+			{
+				//ホーミング弾を生成
+				bullets[bulletCount] = 
+					new HomingBullets(GetLocation(), speed_Homing);
 			}
 		}
 	}
@@ -243,4 +253,38 @@ void Enemy_Base::InputCSV(const char* pass)
 		return;
 	}
 	fclose(fp); /*ファイルを閉じる*/
+}
+
+
+//発射する弾のスピードをセット    (対象の弾 , スピード)
+void Enemy_Base::SetBulletsSpeed(Bullet_Type type, float speed)
+{
+	//対象の弾
+	switch (type)
+	{
+	case Bullet_Type::Straight:     //ストレート
+
+		speed_Straight = speed;
+		break;
+
+	case Bullet_Type::Vortex:       //回転
+
+		speed_Vortex = speed;
+		break;   
+
+	case Bullet_Type::TakeAim:      //自機狙い
+
+		speed_TakeAim = speed;
+		break;  
+
+	case Bullet_Type::Homing:       //ホーミング
+
+		speed_Homing = speed;
+		break;
+
+	default:
+		break;
+	}
+
+	return;
 }

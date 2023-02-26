@@ -22,7 +22,7 @@ VortexBullets::VortexBullets(T_LOCATION location, float speed, int angle, unsign
 }
 
 //çXêV
-void VortexBullets::UpDate()
+void VortexBullets::Update()
 {
 	T_LOCATION newlocation = GetLocation();    //éüÇÃç¿ïW
 

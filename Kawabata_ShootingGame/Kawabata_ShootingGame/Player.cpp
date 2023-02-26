@@ -41,7 +41,7 @@ void Player::Update()
 	{
 		//”z—ñ‚Ì‹ó—v‘f
 		if (bullets[bulletCount] == nullptr) break;
-		bullets[bulletCount]->UpDate();
+		bullets[bulletCount]->Update();
 
 		//‰æ–ÊŠO‚Åíœ‚·‚é
 		if (bullets[bulletCount]->IsScreenOut() == true)

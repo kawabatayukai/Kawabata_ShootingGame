@@ -2,14 +2,14 @@
 #include "StraightBullets.h"
 
 StraightBullets::StraightBullets(T_LOCATION location,T_LOCATION speed)
-	:BulletsBase(location, 5.0f, 10, speed)    //上方向にまっすぐ
+	:BulletsBase(location, 7.0f, 10, speed)    //上方向にまっすぐ
 {
 	//画像読み込み
 	image = LoadGraph("images/bullets1.png");
 }
 
 //更新
-void StraightBullets::UpDate()
+void StraightBullets::Update()
 {
 	T_LOCATION newlocation = GetLocation();    //次の座標
 	newlocation.y += speed.y;                  //座標を変更
