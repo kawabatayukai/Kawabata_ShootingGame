@@ -39,7 +39,7 @@ void TitleScene::Draw() const
 	//カーソル
 	DrawCircle(420, (440 + (menu_num * 100)), 30, 0x00ff00, TRUE);
 
-	DrawStringToHandle(200, 150, "タイトル", 0x00ff00, font, 0x000000);
+	DrawStringToHandle(300, 150, "Insect Fight", 0x00ff00, font, 0x000000);
 	DrawStringToHandle(500, 400, "START", 0x00ff00, font, 0x000000);
 	DrawStringToHandle(500, 500, " END ", 0x00ff00, font, 0x000000);
 }
